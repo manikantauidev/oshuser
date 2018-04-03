@@ -47,20 +47,44 @@
    <!-- Pending Approvals Tab Ends -->
    
    <!-- Booking Status Tab Starts -->
-   <div role="tabpanel" class="tab-pane" id="bookings">
+   <div role="tabpanel" class="tab-pane arcbook" id="bookings">
       <div id="content">
          <div class="col-md-12">
             <div class="row">
                <h2 class="main-title"><span>Bookings</span></h2>
 			   <div class="rv-top">
-			   <div class="selectDropdown">
+			    <form name="historyForm" novalidate="">
+
+			   <div class="col-md-2 pad0  selectDropdown">
                   <div class="selectedValueClass">
                      <select ng-init="selectedStatus = filterOptions[0]" 
                         ng-model="selectedStatus" 
-                        ng-options="optn.name for optn in filterOptions" ng-change="selectOptionToFilter(selectedStatus)">
+                        ng-options="optn.name for optn in filterOptions" >
                      </select>
                   </div>
                </div>
+			    <div class="col-md-2 pad0">
+                     <div class="form-group" ng-class="{ 'has-error' : historyForm.startDate.$invalid &amp;&amp; !historyForm.startDate.$pristine }">
+                        
+						<input type="text" id="arcfromdate" name="startDate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="selectedStatus.startDate" placeholder="From Date" required="">
+                        <p ng-show="historyForm.startDate.$touched &amp;&amp; historyForm.startDate.$invalid" class="help-block ng-hide">From Date is required</p>
+                     </div>
+                  </div>
+			   <div class="col-md-2 pad0">
+                     <div class="form-group" ng-class="{ 'has-error' : historyForm.todate.$invalid &amp;&amp; !historyForm.todate.$pristine }">
+                       
+						<input type="text" id="arctodate" name="todate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="selectedStatus.endDate" placeholder="To Date" required="">
+                        <p ng-show="historyForm.todate.$touched &amp;&amp; historyForm.todate.$invalid" class="help-block ng-hide">To Date is required</p>
+                     </div>
+                  </div>
+				   <div class="col-md-2 pad0">
+                     <div class="form-group">
+                        <div class="button-login"></br>
+                           <button id="submit" type="submit" class="btn orderBtn" ng-disabled="historyForm.$invalid" ng-click="ArchitectByDate(selectedStatus)">Show</button>
+                        </div>
+                     </div>
+                  </div>
+				  </form>
                <p class="ar-para" ng-show="pendResponse">Showing all <b>Pending to Respond</b> bookings</p>
                <p class="ar-para" ng-show="responded"> Showing all <b>Responded</b> bookings</p>
                <p class="ar-para" ng-show="allbookings">Showing <b>All</b> bookings</p>

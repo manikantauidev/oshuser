@@ -1338,3 +1338,10 @@ ul.dropdown-menu.dropdown-menu-form.ng-scope {
 	.pr multiselect-parent {
     width: 100%;
 }
+.arcbook .button-login {
+    text-align: center;
+    margin: -11px 0 0 0;
+}
+.arcbook .button-login .btn, .button-login .btn:focus{
+	margin:0;
+}

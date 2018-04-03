@@ -5,6 +5,11 @@ angular.module('newapp')
 		{ name: 'Approved', status: 'Y' },
 		{ name: 'All', status: 'ALL' }
 	];
+	 $("#arcfromdate, #arctodate").datepicker({
+		autoclose: true,
+		format: "yyyy-mm-dd",
+		endDate: "today"
+	});
 	
 	// Default API Response Calling Starts //
 	var payload = {
@@ -215,22 +220,22 @@ angular.module('newapp')
 		{ name: 'All', status: 'ALL' }
 	];
 	$scope.pendResponse = true;
-	var request = {
-		vendorType : "3",
-		status : "N"
-	};
-	$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
-		console.log(resp);
-		$scope.bookingsGrid.data = resp.data.responseData;
-		$scope.bookingCount = resp.data.paginationData.totalCount;
-	});
-	$scope.bookingsPagingAct = function(page, pageSize, total){
-		$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber="+page+"&pageSize=10", request).then(function(resp){
-			console.log(resp);
-			$scope.bookingsGrid.data = resp.data.responseData;
-			$scope.bookingCount = resp.data.paginationData.totalCount;
-		});
-	}
+	// var request = {
+		// vendorType : "3",
+		// status : "N"
+	// };
+	// $http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
+		// console.log(resp);
+		// $scope.bookingsGrid.data = resp.data.responseData;
+		// $scope.bookingCount = resp.data.paginationData.totalCount;
+	// });
+	// $scope.bookingsPagingAct = function(page, pageSize, total){
+		// $http.post(resturl+"/getVendorBookingsForAdmin?pageNumber="+page+"&pageSize=10", request).then(function(resp){
+			// console.log(resp);
+			// $scope.bookingsGrid.data = resp.data.responseData;
+			// $scope.bookingCount = resp.data.paginationData.totalCount;
+		// });
+	// }
 	$scope.bookingsGrid = {};
 	$scope.bookingsGrid.columnDefs = [
 		{name:'customerName', displayName: 'Customer'},
@@ -262,14 +267,16 @@ angular.module('newapp')
 		}
 	}
 	
-	$scope.selectOptionToFilter = function(selectedStatus){
+	$scope.ArchitectByDate = function(selectedStatus){
 		if(selectedStatus.status == "N"){
 			$scope.pendResponse = true;
 			$scope.responded = false;
 			$scope.allbookings = false;
 			var request = {
 				vendorType : "3",
-				status : "N"
+				startDate : selectedStatus.startDate,
+				endDate : selectedStatus.endDate,
+				status : selectedStatus.status
 			}
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
 				console.log(resp);
@@ -290,7 +297,9 @@ angular.module('newapp')
 			$scope.allbookings = false;
 			var request = {
 				vendorType : "3",
-				status : "Y"
+				startDate : selectedStatus.startDate,
+				endDate : selectedStatus.endDate,
+				status : selectedStatus.status
 			}
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
 				console.log(resp);
@@ -311,7 +320,9 @@ angular.module('newapp')
 			$scope.allbookings = true;
 			var request = {
 				vendorType : "3",
-				status : "ALL"
+				startDate : selectedStatus.startDate,
+				endDate : selectedStatus.endDate,
+				status : selectedStatus.status
 			}
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
 				console.log(resp);

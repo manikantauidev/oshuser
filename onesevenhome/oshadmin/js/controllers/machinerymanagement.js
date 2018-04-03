@@ -5,6 +5,12 @@ angular.module('newapp')
 		{ name: 'Approved', status: 'Y' },
 		{ name: 'All', status: 'ALL' }
 	];
+	 $("#machfromdate, #machtodate").datepicker({
+		autoclose: true,
+		format: "yyyy-mm-dd",
+		endDate: "today"
+	});
+	
 	// Portfolio Approvals Starts //
 	// Default API Calling //
 	$scope.pending = true;
@@ -324,11 +330,14 @@ angular.module('newapp')
 	}
 	
 	// Function retrieve the booking's list based on status //
-	$scope.selectOptionToFilter = function(selectedStatus) {
+	$scope.machinaryByDate = function(selectedStatus) {
 		if(selectedStatus.status == "N"){
 			var payload = {
 				vendorType : "5",
-				status : "N"
+				startDate : selectedStatus.startDate,
+				endDate : selectedStatus.endDate,
+				status : selectedStatus.status
+			
 			};
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", payload).then(function(resp){
 				console.log(resp);
@@ -342,7 +351,9 @@ angular.module('newapp')
 		else if(selectedStatus.status == "Y"){
 			var payload = {
 				vendorType : "5",
-				status : "Y"
+				startDate : selectedStatus.startDate,
+				endDate : selectedStatus.endDate,
+				status : selectedStatus.status
 			};
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", payload).then(function(resp){
 				console.log(resp);
@@ -356,7 +367,9 @@ angular.module('newapp')
 		else {
 			var payload = {
 				vendorType : "5",
-				status : "ALL"
+				startDate : selectedStatus.startDate,
+				endDate : selectedStatus.endDate,
+				status : selectedStatus.status
 			};
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", payload).then(function(resp){
 				console.log(resp);
