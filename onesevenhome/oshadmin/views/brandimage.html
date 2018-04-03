@@ -10,11 +10,9 @@
                      <p ng-show="barndImageUploadForm.brandName.$touched && barndImageUploadForm.brandName.$error.required" class="help-block">Brand Name is required</p>
                   </div>
                   <div class="input-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                     <input type="file" id="brandImage" name="brandImage" upload-files class="inputfile inputfile-2"/>
+                     <input type="file" id="brandImage" name="brandImage" ng-model="brandImage" brand-images class="inputfile inputfile-2" required />
                      <label for="brandImage"><span>Select Image</span></label>
-                     <ul>
-                        <li ng-repeat="brandImage in files">{{brandImage.name}}</li>
-                     </ul>
+                     <p>{{files[0].name}}</p>
                   </div>
                   <div class="button-login col-xs-12 col-sm-4 col-md-4 col-lg-4">
                      <button type="submit" class="btn btn-primary" ng-disabled="barndImageUploadForm.$invalid" value="Upload" ng-click="brandImageUpload(brandImg)">

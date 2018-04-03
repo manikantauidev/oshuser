@@ -51,7 +51,12 @@ angular.module('newapp')
 	$scope.$on("seletedFile", function (event, args) {
         $scope.$apply(function () {
             //add the file object to the scope's files collection
-            $scope.files.push(args.file);
+            if ($scope.files.length == 0) {
+               $scope.files.push(args.file);
+            } else {
+               $scope.files.splice(0, 1);
+               $scope.files.push(args.file);
+            }
         });
     });
 	
@@ -277,19 +282,27 @@ angular.module('newapp')
 		});
 	};
 });
-newapp.directive('uploadFiles', function () {
+newapp.directive('brandImages', function () {
 	return {
-	//create a new scope
-	scope: true,
-	  link: function (scope, el, attrs) {
-		el.bind('change', function (event) {
-		  var files = event.target.files;
-			//iterate files since 'multiple' may be specified on the element
-              for (var i = 0; i < files.length; i++) {
-				//emit event upward
-                scope.$emit("seletedFile", { file: files[i] });
-              }
-          });
-		}
-	};
+      require: 'ngModel',
+      //create a new scope
+      scope: true,
+      link: function (scope, el, attrs, ngModel) {
+         el.bind('change', function (event) {
+            var files = event.target.files;
+            //iterate files since 'multiple' may be specified on the element
+            for (var i = 0; i < files.length; i++) {
+               //emit event upward
+               scope.$emit("seletedFile", {
+                  file: files[i]
+               });
+            }
+            scope.$apply(function () {
+               console.log(el.val());
+               ngModel.$setViewValue(el.val());
+               ngModel.$render();
+            })
+         });
+      }
+   };
 });

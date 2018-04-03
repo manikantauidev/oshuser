@@ -3,7 +3,7 @@
       <div class="row-fluid">
          <div class="content-box add-product">
             <h2 class="main-title"><span>Category Management</span></h2>
-            <form class="prof form-login prodMgmt" method="post">
+            <form class="prof form-login prodMgmt" name="catMgmtForm" method="post">
                <fieldset>
                   <div class="input col-xs-12 col-sm-3 col-md-3 col-lg-3"" title="Select Category">
                      <div class="sec-block">
@@ -24,14 +24,15 @@
                      <i class="fa fa-star" aria-hidden="true"></i>
                   </div>
                   <div class="input-group col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                     <input type="file" id="file" name="file" upload-files class="inputfile inputfile-2"/>
+                     <input type="file" id="file" name="file" category-files ng-model="fileName" class="inputfile inputfile-2" required />
                      <label for="file"><span>Select Image</span></label>
-                     <ul>
+                     <p>&nbsp;&nbsp;{{files[0].name}}</p>
+					 <!--<ul>
                         <li ng-repeat="File in files">{{File.name}}</li>
-                     </ul>
+                     </ul>-->
                   </div>
                   <div class="button-login col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                     <button type="submit" class="btn btn-primary" ng-click="proceed()">Upload</button>
+                     <button type="submit" class="btn btn-primary" ng-disabled="catMgmtForm.$invalid" ng-click="proceed()">Upload</button>
                   </div>
                </fieldset>
             </form>

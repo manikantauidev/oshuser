@@ -73,7 +73,7 @@
                                           ng-options="option.name for option in typeOfSearch">
                                        </select>
                                     </div>
-                                    <input type="text" ng-keypress="searchitems(searchSelected,$event,searchType.value)" ng-model="searchSelected" placeholder="Search" id="modalValue" value="searchSelected" uib-typeahead="item for item in getSearch($viewValue, searchType.value)" typeahead-focus-first="false" typeahead-wait-ms="1000" typeahead-min-length="3" typeahead-on-select="onSearchSelect(searchSelected, $item, $model, $label, $event, searchType.value)" typeahead-no-results="noResults">
+                                    <input type="text" ng-keypress="searchitems(searchSelected,$event,searchType.value)" ng-model="searchSelected" placeholder="Search" id="modalValue" value="searchSelected" uib-typeahead="item for item in getSearch($viewValue, searchType.value)" typeahead-focus-first="false" typeahead-wait-ms="1000" typeahead-min-length="3" typeahead-on-select="onSelect(searchSelected, $item, $model, $label, $event, searchType.value)" typeahead-no-results="noResults">
                                     <span class="menu-in-search" ng-click="searchProducts(searchSelected, searchType.value)"><i class="fa fa-search"></i></span>
                                     <span class="menu-in-clear" ng-click="clearString(searchSelected)"><i class="fa fa-times-circle"></i></span>
                                  </div>

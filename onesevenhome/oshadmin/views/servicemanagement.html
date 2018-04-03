@@ -9,41 +9,40 @@
       <div id="content">
          <div class="col-md-12">
             <!-- Update Product -->
-              <h2 class="main-title"><span>Service Bookings</span></h2>
-				<div class="selectDropdown col-md-4 pad0">
-                  <div class="selectedValueClass">
-					<select ng-init="selectedValue = options[0]" 
-                      ng-model="selectedValue" 
-                      ng-options="option.name for option in options">
-					</select>
+            <h2 class="main-title"><span>Service Bookings</span></h2>
+            <div class="selectDropdown col-md-4 pad0 sm-dropdown">
+               <div class="selectedValueClass">
+                  <select ng-init="selectedValue = options[0]" 
+                     ng-model="selectedValue" 
+                     ng-options="option.name for option in options">
+                  </select>
+               </div>
+            </div>
+            <div class="col-md-3 pad0">
+               <div class="form-group" ng-class="{ 'has-error' : orderForm.startDate.$invalid &amp;&amp; !orderForm.startDate.$pristine }">
+                  <input type="text" id="startDate" name="startDate" class="form-control sm-input ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="bookingDates.startDate" placeholder="From Date" required="">
+                  <p ng-show="orderForm.startDate.$touched && orderForm.startDate.$invalid" class="help-block">From Date is required</p>
+               </div>
+            </div>
+            <div class="col-md-3 pad0">
+               <div class="form-group" ng-class="{ 'has-error' : orderForm.endDate.$invalid &amp;&amp; !orderForm.endDate.$pristine }">
+                  <input type="text" id="endDate" name="todate" class="form-control sm-input ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="bookingDates.endDate" placeholder="To Date" required="">
+                  <p ng-show="orderForm.endDate.$touched &amp;&amp; orderForm.endDate.$invalid" class="help-block ng-hide">To Date is required</p>
+               </div>
+            </div>
+            <div class="col-md-3 pad0">
+               <div class="form-group">
+                  <div class="button-login acrbook">
+                     <button id="submit" type="submit" class="btn orderBtn" ng-disabled="historyForm.$invalid" ng-click="getBookings(selectedValue.status, bookingDates)">List Bookings</button>
                   </div>
-				</div>
-				<div class="col-md-3 pad0">
-                     <div class="form-group" ng-class="{ 'has-error' : orderForm.startDate.$invalid &amp;&amp; !orderForm.startDate.$pristine }">
-                        <label>From Date</label>
-						<input type="text" id="startDate" name="startDate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="bookingDates.startDate" placeholder="From Date" required="">
-                        <p ng-show="orderForm.startDate.$touched && orderForm.startDate.$invalid" class="help-block">From Date is required</p>
-                     </div>
-                  </div>
-                  <div class="col-md-3 pad0">
-                     <div class="form-group" ng-class="{ 'has-error' : orderForm.endDate.$invalid &amp;&amp; !orderForm.endDate.$pristine }">
-                        <label>To Date</label>
-						<input type="text" id="endDate" name="todate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="bookingDates.endDate" placeholder="To Date" required="">
-                        <p ng-show="orderForm.endDate.$touched &amp;&amp; orderForm.endDate.$invalid" class="help-block ng-hide">To Date is required</p>
-                     </div>
-                  </div>
-				  <div class="col-md-3 pad0">
-                     <div class="form-group">
-                        <div class="button-login"></br>
-                           <button id="submit" type="submit" class="btn orderBtn" ng-disabled="historyForm.$invalid" ng-click="getBookings(selectedValue.status, bookingDates)">List Bookings</button>
-                        </div>
-                     </div>
-                  </div>
-				  <p class="ar-para" ng-show="opened">Showing all <b>Opened</b> Bookings</p>
-                  <p class="ar-para" ng-show="closed"> Showing all <b>Closed</b> Bookings</p>
-                  <p class="ar-para" ng-show="allBookings">Showing <b>All </b> Bookings</p>
-               <div class="clearfix"></div>
-			   <table id="example" class="hide-content table table-striped table-bordered bootstrap-datatable datatable">
+               </div>
+            </div>
+			<div class="clearfix"></div>
+            <p class="ar-para" ng-show="opened">Showing all <b>Opened</b> Bookings</p>
+            <p class="ar-para" ng-show="closed"> Showing all <b>Closed</b> Bookings</p>
+            <p class="ar-para" ng-show="allBookings">Showing <b>All </b> Bookings</p>
+            <div class="clearfix"></div>
+            <table id="example" class="hide-content table table-striped table-bordered bootstrap-datatable datatable">
                <thead>
                   <tr>
                      <th>Service Type</th>
@@ -61,21 +60,21 @@
                      <td class="center">{{bookedService.bookingDate}}</td>
                      <td class="center">{{bookedService.customerBookingdetails.customerName}}</td>
                      <td class="center">{{bookedService.status}}</td>
-					 <td class="center">
-						<a class="btn btn-primary" data-toggle="modal" data-target=".bookServicePopup" ng-click="getBookedService(bookedService)">Details</a>
+                     <td class="center">
+                        <a class="btn btn-primary" data-toggle="modal" data-target=".bookServicePopup" ng-click="getBookedService(bookedService)">Details</a>
                      </td>
                   </tr>
                </tbody>
             </table>
-               <div class="text-center">
-                  <div paging
-                     page="1" 
-                     page-size="15" 
-                     total=bookingCount
-                     paging-action="bookServicePaging(page, pageSize, total, selectedValue.status, bookingDates)">
-                  </div>
+            <div class="text-center">
+               <div paging
+                  page="1" 
+                  page-size="15" 
+                  total=bookingCount
+                  paging-action="bookServicePaging(page, pageSize, total, selectedValue.status, bookingDates)">
                </div>
             </div>
+         </div>
       </div>
    </div>
 </div>
@@ -99,14 +98,14 @@
                         <label>Customer Mobile</label>
                         <input type="text" name="contactNumber" class="form-control" ng-model="bookedDetails.contactNumber" placeholder="Customer Mobile" required="" ng-readonly="true" readonly="readonly">
                      </div>
-					 <div class="form-group" ng-class="{ 'has-error' : bookServiceForm.emailAddress.$invalid &amp;&amp; !bookServiceForm.emailAddress.$pristine }">
+                     <div class="form-group" ng-class="{ 'has-error' : bookServiceForm.emailAddress.$invalid &amp;&amp; !bookServiceForm.emailAddress.$pristine }">
                         <label>Customer Email</label>
                         <input type="text" name="emailAddress" class="form-control" ng-model="bookedDetails.emailAddress" placeholder="Customer Email" required="" ng-readonly="true" readonly="readonly">
                      </div>
                      <div class="form-group" ng-class="{ 'has-error' : bookServiceForm.address.$invalid &amp;&amp; !bookServiceForm.address.$pristine }">
                         <label>Customer Address</label>
-						<p>{{bookedDetails.street}}, {{bookedDetails.area}}, {{bookedDetails.city}}</p>
-						<p>{{bookedDetails.state}} - {{bookedDetails.pinCode}}</p>
+                        <p>{{bookedDetails.street}}, {{bookedDetails.area}}, {{bookedDetails.city}}</p>
+                        <p>{{bookedDetails.state}} - {{bookedDetails.pinCode}}</p>
                         <!-- <input type="text" name="customerName" class="form-control" ng-model="bookedDetails.customerName" placeholder="Customer Name" required="" ng-readonly="true" readonly="readonly"> -->
                      </div>
                   </div>
@@ -120,7 +119,7 @@
                         <label>Telephone Number</label>
                         <input type="text" name="telephoneNumber" class="form-control" ng-model="bookedDetails.telephoneNumber" placeholder="Telephone Number" required="" ng-readonly="true" readonly="readonly">
                      </div>
-					 <div class="form-group" ng-class="{ 'has-error' : bookServiceForm.providerEmail.$invalid &amp;&amp; !bookServiceForm.providerEmail.$pristine }">
+                     <div class="form-group" ng-class="{ 'has-error' : bookServiceForm.providerEmail.$invalid &amp;&amp; !bookServiceForm.providerEmail.$pristine }">
                         <label>Email Address</label>
                         <input type="text" name="providerEmail" class="form-control" ng-model="bookedDetails.providerEmail" placeholder="Provider Email" required="" ng-readonly="true" readonly="readonly">
                      </div>
@@ -183,22 +182,24 @@
    </div>
 </div>
 <!--Date Error Popup -->
-			<div class="modal fade errorPopup" tabindex="-1" role="dialog">
-                  <div class="modal-dialog modal-sm" role="document">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                           <h4 class="modal-title" id="myModalLabel">Error</h4>
-                        </div>
-                        <div class="modal-body">
-                           <p><i class="fa fa-warning fa-3x"></i><span>{{failure}}</span></p>
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+<div class="modal fade errorPopup" tabindex="-1" role="dialog">
+   <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Error</h4>
+         </div>
+         <div class="modal-body">
+            <p><i class="fa fa-warning fa-3x"></i><span>{{failure}}</span></p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- Delete Confirm Popup -->
 <div class="modal fade confirmPopup" tabindex="-1" role="dialog">
    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">

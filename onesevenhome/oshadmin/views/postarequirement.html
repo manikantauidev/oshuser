@@ -3,6 +3,37 @@
       <div class="row-fluid">
          <div class="content-box add-product">
             <h2 class="main-title"><span>Post A Requirement</span></h2>
+            <div class="selectDropdown col-md-4 sm-dropdown pad0">
+               <div class="selectedValueClass">
+                  <select ng-init="selectedValue = options[0]" 
+                     ng-model="selectedValue" 
+                     ng-options="option.name for option in options">
+                  </select>
+               </div>
+            </div>
+            <div class="col-md-3 pad0">
+               <div class="form-group" ng-class="{ 'has-error' : orderForm.startDate.$invalid &amp;&amp; !orderForm.startDate.$pristine }">
+                  <input type="text" id="startDate" name="startDate" class="form-control sm-input ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="requirementDates.startDate" placeholder="From Date" required="">
+                  <p ng-show="orderForm.startDate.$touched && orderForm.startDate.$invalid" class="help-block">From Date is required</p>
+               </div>
+            </div>
+            <div class="col-md-3 pad0">
+               <div class="form-group" ng-class="{ 'has-error' : orderForm.endDate.$invalid &amp;&amp; !orderForm.endDate.$pristine }">
+                  <input type="text" id="endDate" name="endDate" class="form-control sm-input ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="requirementDates.endDate" placeholder="To Date" required="">
+                  <p ng-show="orderForm.endDate.$touched &amp;&amp; orderForm.endDate.$invalid" class="help-block ng-hide">To Date is required</p>
+               </div>
+            </div>
+            <div class="col-md-3 pad0">
+               <div class="form-group">
+                  <div class="button-login acrbook">
+                     <button id="submit" type="submit" class="btn orderBtn" ng-disabled="historyForm.$invalid" ng-click="getRequirements(selectedValue.status, requirementDates)">View Requirements</button>
+                  </div>
+               </div>
+            </div>
+			<div class="clearfix"></div>
+            <p class="ar-para" ng-show="opened">Showing all <b>Opened</b> Bookings</p>
+            <p class="ar-para" ng-show="closed"> Showing all <b>Closed</b> Bookings</p>
+            <p class="ar-para" ng-show="allBookings">Showing <b>All </b> Bookings</p>
             <div class="col-md-12">
                <div class="gridStyle"
                   ui-grid="postRequirementGrid"  ui-grid-edit ui-grid-cellnav  ui-grid-auto-resize></div>
@@ -12,11 +43,11 @@
                      page="1" 
                      page-size="10" 
                      total=postRequireCount
-                     paging-action="postRequirePaging(page, pageSize, total)">
+                     paging-action="postRequirePaging(page, pageSize, total, selectedValue.status, requirementDates)">
                   </div>
                </div>
             </div>
-			<!-- Post A Requirement Detail Popup -->
+            <!-- Post A Requirement Detail Popup -->
             <div class="modal fade" id="postRequirementModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel-1" aria-hidden="true">
                <div class="modal-dialog" role="document">
                   <div class="modal-content postrequire-view">
@@ -39,13 +70,13 @@
                                  <input type="text" name="customerName" class="form-control" ng-model="requirementDetails.customerName" placeholder="Customer Name" required="" ng-readonly="true" readonly="readonly">
                                  <p ng-show="postRequirementForm.customerName.$touched &amp;&amp; postRequirementForm.customerName.$invalid" class="help-block ng-hide">Customer Name is required</p>
                               </div>
-							  <!-- Customer Id -->
+                              <!-- Customer Id -->
                               <div class="form-group" ng-class="{ 'has-error' : postRequirementForm.customerId.$invalid &amp;&amp; !postRequirementForm.customerId.$pristine }">
                                  <label>Customer Id</label>
                                  <input type="text" name="customerId" class="form-control" ng-model="requirementDetails.customerId" placeholder="Customer Id" required="" ng-readonly="true" readonly="readonly">
                                  <p ng-show="postRequirementForm.customerId.$touched &amp;&amp; postRequirementForm.customerId.$invalid" class="help-block ng-hide">Customer Id is required</p>
                               </div>
-						   </div>
+                           </div>
                            <div class="col-xs-12 col-sm-6 pull-right">
                               <!-- Customer Id -->
                               <div class="form-group" ng-class="{ 'has-error' : postRequirementForm.responseMessage.$invalid &amp;&amp; !postRequirementForm.responseMessage.$pristine }">
@@ -58,7 +89,7 @@
                         </form>
                      </div>
                      <div class="modal-footer">
-                       <button type="button" title="Respond" class="btn btn-danger" data-target=".confirmPopup" ng-click="postReqRespond(requirementDetails)" ng-disabled="postRequirementForm.$invalid">Respond</button>
+                        <button type="button" title="Respond" class="btn btn-danger" data-target=".confirmPopup" ng-click="postReqRespond(requirementDetails, selectedValue.status, requirementDates)" ng-disabled="postRequirementForm.$invalid">Respond</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                      </div>
                   </div>
@@ -99,7 +130,7 @@
                   </div>
                </div>
             </div>
-            
+			<!-- Delete Confirmation Popup -->
             <div class="modal fade confirmPopup" tabindex="-1" role="dialog">
                <div class="modal-dialog  modal-sm" role="document">
                   <div class="modal-content">

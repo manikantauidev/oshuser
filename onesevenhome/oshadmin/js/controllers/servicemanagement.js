@@ -14,7 +14,7 @@ angular.module('newapp')
 		 $window.scrollTo(0, 0);
 		 console.log(selectedValue, bookingDates);
 		 if(bookingDates.startDate > bookingDates.endDate){
-			 $scope.failure = "Start date must be less than End date";
+			$scope.failure = "Start date must be less than End date";
 			$('.errorPopup').modal('show');
 		 }
 		 else{

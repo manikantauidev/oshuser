@@ -691,6 +691,130 @@ angular.module('newapp')
       });
     }
 	
+	// On Seearch Select Method //
+	$scope.onSelect = function(searchSelected, $item, $model, $label, $event, searchType){
+		console.log(searchSelected, $item, $model, $label, $event, searchType);
+		$(".menu-search input").val("");
+        $(".menu-search .input > .fa").trigger("click");
+		if (searchType == "Category") {
+          var request = {
+            searchString: searchSelected
+          };
+          $http.post(resturl+"/getProductByCategorySelection", request).then(function (resp) {
+            console.log(resp);
+			if(resp.data.categoryData != null ){
+				$scope.noReultsMessage = false;
+				$scope.categoryResults = resp.data.categoryData;
+				$scope.categoryTitle = resp.data.categoryData[0].title.replace(/ /g, "_");
+				$scope.subCategoryTitle = resp.data.categoryData[0].subCategory[0].title.replace(/ /g, "_");
+				if($scope.categoryTitle == "Architects" || $scope.categoryTitle == "Machinery_&_Equipment" || $scope.categoryTitle == "Wall_Paper"){
+					$scope.categoryResults[0].subCategory[0].checked = true;
+					$scope.showVendorResponse = true;
+					$scope.showCategoryResponse = false;
+					$scope.showBrandResponse = false;
+					$scope.showProductResponse = false;
+					var request = {code : $scope.subCategoryTitle};
+					$http.post(resturl+"/getVendorsList?pageNumber=1&pageSize=5",request).then(function(resp){
+						console.log(resp);
+						$scope.vendorCategoryData = resp.data.responseData;
+						$scope.vendorcatCount = resp.data.paginationData.totalCount;	
+						for(a=0; a<$scope.categoryResults.length; a++){
+							for(b=0; b<$scope.categoryResults[a].subCategory.length; b++){
+								if($scope.categoryResults[a].subCategory[b].title == $scope.subCategoryTitle){
+									$scope.categoryResults[a].subCategory[b].checked = true;
+								}
+							}
+						}
+					});
+				}
+				else{
+					$http.get(resturl+"/categories/"+$scope.subCategoryTitle+"?pageNumber=1&pageSize=15").then(function (resp) {
+						$scope.productsByCategory = resp.data.responseData;
+						$scope.prodByCatCount = resp.data.paginationData.totalCount;
+						console.log($scope.productsByCategory);
+						$(".menu-search input").val("");
+						$scope.categoryResults[0].subCategory[0].checked = true;
+						$scope.showCategoryResponse = true;
+						$scope.showBrandResponse = false;
+						$scope.showProductResponse = false;
+						$scope.showVendorResponse = false;
+					});
+				}
+				// $location.path('/searchresults/'+$scope.categoryTitle+"/"+$scope.subCategoryTitle);
+			}
+			else{
+				$scope.noResults = searchSelected;
+				$scope.noReultsMessage = true;
+				$scope.categoryResults = "";
+				$scope.productsByCategory = "";
+				$scope.prodByCatCount = 0;
+				$(".menu-search input").val("");
+			}
+          });
+        }
+		
+		// Brand Search From Search Results Page //
+		else if (searchType == "Brand") {
+          var request = {
+            searchFilterString: searchSelected
+          };
+          $http.post(resturl + "/getFiltersBySearch", request).then(function (resp) {
+            console.log(resp);
+			if(resp.data.filteredData[0] != undefined){
+				$scope.noReultsMessage = false;
+				$scope.brandResults = resp.data.filteredData;
+				$scope.brandResults[0].filterTypes[0].checked = true;
+				var request = {
+					"filterIds": [$scope.brandResults[0].filterTypes[0].filterTypeId]
+				};
+				console.log(request);
+				$http.post(resturl + "/getProductsByFilters?pageNumber=1&pageSize=15", request).then(function (resp) {
+					console.log(resp);
+					$scope.productsRespByFilters = resp.data.filteredProducts;
+					$scope.filterProdCount = resp.data.paginationData.totalCount;
+					$(".menu-search input").val("");
+				});
+			}
+			else{
+				$scope.noResults = searchSelected;
+				$scope.noReultsMessage = true;
+				$scope.brandResults = "";
+				$scope.productsRespByFilters = "";
+				$scope.filterProdCount = 0;
+				$(".menu-search input").val("");
+			}
+          });
+          $scope.showCategoryResponse = false;
+          $scope.showBrandResponse = true;
+          $scope.showProductResponse = false;
+		  $scope.showvendorResponse = false;
+        }
+		// Products Search From Search Page //
+		else {
+			$scope.showCategoryResponse = false;
+			$scope.showBrandResponse = false;
+			$scope.showProductResponse = true;
+			$scope.showvendorResponse = false;
+			console.log(searchSelected);
+			var searchRequest = {
+				searchString: searchSelected
+			};
+			$http.post(resturl + "/getProductsBySearch", searchRequest).then(function (response) {
+				if(response.data.filteredProducts[0] != undefined){
+					$scope.noReultsMessage = false;
+					$scope.getsearchResults = response.data.filteredProducts;
+					$(".menu-search input").val("");
+				}
+				else{
+					$scope.noResults = searchSelected;
+					$scope.noReultsMessage = true;
+					$scope.getsearchResults = "";
+					$(".menu-search input").val("");
+				}
+			});
+        }
+	}
+	
 	$http.get(resturl+"/getRecommendedProduct").then(function(resp) {
 		console.log(resp);
 		$scope.recommend = resp.data.recommendedProducts;
