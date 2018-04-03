@@ -1510,6 +1510,7 @@ ul.dropdown-menu.dropdown-menu-form.ng-scope {
    overflow: hidden;
    padding: 14px 18px;
 }
+<<<<<<< HEAD
 
 .vorder-top h4 {
    font-weight: 700;
@@ -1654,4 +1655,11 @@ ul.dropdown-menu.dropdown-menu-form.ng-scope {
 .acrbook {
    text-align: left;
    margin: -10px 0 0 0;
+}
+.arcbook .button-login {
+    text-align: center;
+    margin: -11px 0 0 0;
+}
+.arcbook .button-login .btn, .button-login .btn:focus{
+	margin:0;
 }
