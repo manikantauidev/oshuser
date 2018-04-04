@@ -705,7 +705,7 @@ select {
    border: 1px solid #9d9d9d;
    background-color: transparent;
    width: 100%;
-   height: 40px;
+   height: 45px;
    padding: 0 10px;
    z-index: 0;
    appearance: none;
@@ -1628,8 +1628,11 @@ ul.dropdown-menu.dropdown-menu-form.ng-scope {
 
 .col-md-12.pr {
    margin: -25px 0 0 0;
+    height: 100px;
 }
-
+.pr button#submit {
+    margin: 13px 0 0 0;
+}
 .pr .button-login {
    text-align: left;
 }

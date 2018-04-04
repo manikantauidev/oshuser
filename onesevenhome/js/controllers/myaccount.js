@@ -1457,6 +1457,13 @@ $('.vendorpic').change(function() {
 		
 		// Architecture Retrieval, Upload, Update & Deletion Ends//
 		
+			$('.mechpic').change(function() {
+        var filename = $('.mechpic')[0].files[0].name;
+        $('#mechpicselect_file').html(filename);		
+    });
+		
+		
+		
 		//mechinory retrival popup//
 		$scope.mechDetailsFun = function (mechImages) {
 			$scope.viewmechPortfolio = {
@@ -1465,6 +1472,12 @@ $('.vendorpic').change(function() {
 				portfolioName: mechImages.portfolioName
 			};
 		}
+		
+		
+	
+		
+		
+		
 		
 		/** mechinary portfolio **/
 var reqObj = {
