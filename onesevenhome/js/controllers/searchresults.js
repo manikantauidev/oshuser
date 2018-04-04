@@ -903,6 +903,4 @@ angular.module('newapp')
 			}
 		}]};
 	});
-	
-	
 });

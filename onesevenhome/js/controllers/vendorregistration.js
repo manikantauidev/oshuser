@@ -4,6 +4,7 @@ angular.module('newapp')
 			console.log(resp);
 			$scope.menuitem = resp.data.categoryData;
 		});
+		$scope.isDisabled = false;
 		$scope.typeOfSearch = [{
 				name: "Category",
 				value: "Category"
@@ -194,6 +195,7 @@ angular.module('newapp')
 		}
 		/***** Register API Call ***/
 		function registerapi(vendor) {
+			$scope.isDisabled = true;
 			console.log(vendor);
 			$rootScope.vendorName = vendor.companyName;
 			$rootScope.usertype = vendor.userType;
@@ -231,6 +233,7 @@ angular.module('newapp')
 					$location.path('/conform');
 				} else {
 					$scope.errmsg = true;
+					$scope.isDisabled = false;
 					$location.path('/vendorreg');
 					$scope.errmessage = resp.errorMessage;
 				}

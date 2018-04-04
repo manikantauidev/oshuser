@@ -737,7 +737,23 @@ select {
    width: 15%;
    display: inline-block;
 }
-
+.vm-top .selectDropdown {
+    margin-bottom: 15px;
+    width: 30%;
+    display: inline-block;
+}
+.vm-top input {
+    border: 1px solid #9d9d9d;
+    background-color: #ebebeb;
+    width: 100%;
+    height: 40px;
+}
+#v-top{
+	margin: 0 0 0 30px !important;
+}
+.avProd {
+	display : block;
+}
 p.ar-para {
    display: inline-block;
    margin: 0 0 10px 0;
@@ -1663,3 +1679,15 @@ ul.dropdown-menu.dropdown-menu-form.ng-scope {
 .arcbook .button-login .btn, .button-login .btn:focus{
 	margin:0;
 }
+
+/*.col-md-10.text-right.Deals {
+    float: right;
+    bottom:73px;
+}
+input.avProd.ng-pristine.ng-untouched.ng-valid.ng-empty {
+    margin-right: 5px !important;
+    position: relative;
+    top: 15px;
+    display: inline;
+    width: 17px;
+}*/

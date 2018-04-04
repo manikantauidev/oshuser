@@ -99,6 +99,7 @@
          </div>
          <section class="login mid registration">
             <form name="regForm" novalidate>
+			  <fieldset ng-disabled="isDisabled">
                <h2 class="sec-title"><strong>New Customer</strong></h2>
                <div class="login-mid-block">
                   <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 left">
@@ -268,6 +269,7 @@
                      <span class="close" data-dismiss="alert" aria-label="close" ng-click="alerthide()">&times;</span><strong>Error! </strong>{{errmessage}}
                   </div>
                </div>
+			   </fieldset>
             </form>
          </section>
       </section>

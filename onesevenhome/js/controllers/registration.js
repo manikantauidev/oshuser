@@ -9,26 +9,28 @@ angular.module('newapp')
 		console.log(resp);
 		$scope.menuitem = resp.data.categoryData;
 	});
-	
+	$scope.isDisabled = false;
 	$scope.alerthide=function(){
 		$scope.errmsg=false;
 	}
 	$scope.register = function (user) {
+	$scope.isDisabled = true;
 	$rootScope.firstName =user.firstName;
 	$rootScope.lastName =user.lastName;
 	$rootScope.usertype =user.userType;
 		user.activationURL="http://onesevenhome.com/#/activateuser";
-	$http.post(resturl+"/customer/register", user).then(function(resp) {
-	if(resp.data.status == "true"){
-		$location.path('/conform');
-	}
-	else {
-		$scope.errmsg=true;
-		$location.path('/registration');
-		$scope.errmessage = resp.data.errorMessage;
-	}
-	});
-};
+		$http.post(resturl+"/customer/register", user).then(function(resp) {
+			if(resp.data.status == "true"){
+				$location.path('/conform');
+			}
+			else {
+				$scope.errmsg=true;
+				$scope.isDisabled = false;
+				$location.path('/registration');
+				$scope.errmessage = resp.data.errorMessage;
+			}
+		});
+	};
 	$http.get(resturl+"/cart/displayCart?userId="+localStorage.loggedInuserId).then(function(resp){
 		console.log(resp);
 		$scope.cartlist=resp.data;

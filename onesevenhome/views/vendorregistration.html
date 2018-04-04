@@ -90,7 +90,8 @@
                <div class="login-inner">
                   <h2 class="veg-title"><strong>New Vendor</strong></h2>
                   <form class="form-horizontal" name="vendorForm">
-                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 left">
+                     <fieldset ng-disabled="isDisabled">
+					 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 left">
                         <h4>Vendor Information</h4>
                         <!--VENDOR NAME-->
                         <div class="form-group" ng-class="{ 'has-error' : vendorForm.companyName.$invalid && !vendorForm.companyName.$pristine }">
@@ -125,7 +126,7 @@
                        
 						 <!--country-->
                         <div class="form-group" ng-class="{ 'has-error' : vendorForm.country.$invalid && !vendorForm.country.$pristine }">
-                           <input type="text"  name="country" class="form-control" value="IN"  placeholder="Country " readonly>
+                           <input type="text"  name="country" class="form-control" value="India"  placeholder="Country " readonly>
                            <p ng-show="vendorForm.country.$touched && vendorForm.country.$invalid" class="help-block">Country is required</p>
                            <i class="fa fa-star" aria-hidden="true"></i>
                         </div>
@@ -265,6 +266,7 @@
 					<div class="alert alert-warning " ng-if="errmsg"> 
 						<span class="close" data-dismiss="alert" aria-label="close" ng-click="alerthide()">&times;</span>
 						<strong>Error! </strong>{{errmessage}}</div>
+					</fieldset>
                   </form>
                </div>
             </div>

@@ -195,7 +195,8 @@
                <div class="row">
                   <h2 class="main-title"><span>Registered Vendors</span></h2>
                </div>
-               <div class="vm-top">
+			   <!-- Vendor Retrieval (By Type & Status) Inputs -->
+               <div class="vm-top" id="v-top">
                   <div class="selectDropdown">
                      <div class="selectedValueClass">
                         <select ng-init="selectedValue = options[0]"
@@ -228,6 +229,28 @@
                   <p class="ar-para" ng-show="approved"> Showing all <b>Approved</b> Vendors</p>
                   <p class="ar-para" ng-show="allVendors">Showing <b>All Registered</b> Vendors</p>
                </div>
+			   
+			   <!-- Search Vendor Inputs -->
+			   <div class="vm-top col-xs-12">
+                  <div class="selectDropdown col-sm-3">
+                     <div class="selectedValueClass">
+                        <select ng-init="searchType = searchBy[0]"
+                           ng-model="searchType"
+                           ng-options="option.type for option in searchBy">
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group col-sm-3" ng-if="searchType.type == 'Vendor Name'">
+					<input type="text" name="nameString" class="form-control" ng-model="searchType.name" ng-pattern-restrict="^[A-Za-z0-9]*$" placeholder="Enter Vendor Name" required>
+				  </div>
+				  <div class="form-group col-sm-3" ng-if="searchType.type == 'Vendor Id'">
+					<input type="text" name="idString" class="form-control" ng-model="searchType.id" ng-pattern-restrict="^[0-9]*$" placeholder="Enter Vendor Id" required>
+				  </div>
+                  <div class="button-login col-sm-3">
+                     <button type="button" class="btn btn-primary" ng-click="getVendorByRegistration(searchType)">Search Vendor(s)</button>
+                  </div>
+               </div>
+			   
                <div class="gridStyle"
                   ui-grid="registerVendorsGrid" ui-grid-cellnav  ui-grid-auto-resize>
                </div>
@@ -463,6 +486,29 @@
                <div class="row">
                   <h2 class="main-title"><span>Approve Vendor Products</span></h2>
                </div>
+			   <!-- Search Vendor Inputs -->
+			   <div class="vm-top col-xs-12">
+                  <div class="selectDropdown col-sm-6">
+                     <div class="selectedValueClass">
+                        <select ng-init="prodVendorType = searchBy[0]"
+                           ng-model="prodVendorType"
+                           ng-options="option.type for option in searchBy">
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group col-sm-3" ng-if="prodVendorType.type == 'Vendor Name'">
+					<input type="text" name="nameString" class="form-control" ng-model="prodVendorType.name" ng-pattern-restrict="^[A-Za-z0-9]*$" placeholder="Enter Vendor Name" required>
+				  </div>
+				  <div class="form-group col-sm-3" ng-if="prodVendorType.type == 'Vendor Id'">
+					<input type="text" name="idString" class="form-control" ng-model="prodVendorType.id" ng-pattern-restrict="^[0-9]*$" placeholder="Enter Vendor Id" required>
+				  </div>
+                  <div class="button-login col-sm-3">
+                     <button type="button" class="btn btn-primary" ng-click="getProdVendorBySearch(prodVendorType)">Search Vendor(s)</button>
+                  </div>
+				  <!--<div class="col-md-10 text-right Deals">
+                     <label><input type="checkbox" class="avProd" ng-model="vendorProd" ng-click="getRequestedVendors(vendorProd)">Requested Vendors</label>
+                  </div>-->
+               </div>
                <div class="gridStyle"
                   ui-grid="vendorProductsGrid" ui-grid-cellnav  ui-grid-auto-resize>
                </div>
@@ -566,6 +612,27 @@
                   <p class="ar-para" ng-show="paid"> Showing all <b>Paid </b>vendors</p>
                   <p class="ar-para" ng-show="due_paid">Showing <b>All </b>vendors</p>
                </div>
+			   <!-- Search Vendor Inputs -->
+			   <div class="vm-top col-xs-12">
+                  <div class="selectDropdown col-sm-6">
+                     <div class="selectedValueClass">
+                        <select ng-init="paymentVendorType = searchBy[0]"
+                           ng-model="paymentVendorType"
+                           ng-options="option.type for option in searchBy">
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group col-sm-3" ng-if="paymentVendorType.type == 'Vendor Name'">
+					<input type="text" name="nameString" class="form-control" ng-model="paymentVendorType.name" ng-pattern-restrict="^[A-Za-z0-9]*$" placeholder="Enter Vendor Name" required>
+				  </div>
+				  <div class="form-group col-sm-3" ng-if="paymentVendorType.type == 'Vendor Id'">
+					<input type="text" name="idString" class="form-control" ng-model="paymentVendorType.id" ng-pattern-restrict="^[0-9]*$" placeholder="Enter Vendor Id" required>
+				  </div>
+                  <div class="button-login col-sm-3">
+                     <button type="button" class="btn btn-primary" ng-click="getPaymentVendorBySearch(paymentVendorType)">Search Vendor(s)</button>
+                  </div>
+               </div>
+			   <div class="clearfix"></div>
                <div class="gridStyle"
                   ui-grid="paidVendorsGrid" ui-grid-cellnav  ui-grid-auto-resize>
                </div>

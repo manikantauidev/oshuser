@@ -8,12 +8,13 @@ angular.module('newapp')
 		checkBoxes: true,
 		enableSearch: true
 	};
-		$scope.fileOptions = [
-  { name: 'Certificate', value: 'certificate' },
-  { name: 'File 1', value: 'file1' },
-  { name: 'File 2', value: 'file2' },
-  { name: 'File 3', value: 'file3' }
- ];
+	$scope.fileOptions = [
+		{ name: 'Certificate', value: 'certificate' },
+		{ name: 'File 1', value: 'file1' },
+		{ name: 'File 2', value: 'file2' },
+		{ name: 'File 3', value: 'file3' }
+	];
+	
 	// On Change of Constitution Of Firm //
 	$scope.constitutionchange = function (param) {
 		if (param == "Services") {
@@ -190,12 +191,7 @@ angular.module('newapp')
 		}).error(function (data, status, headers, config) {
 	});
 	};
-	$scope.fileOptions = [
-  { name: 'Certificate', value: 'certificate' },
-  { name: 'File 1', value: 'file1' },
-  { name: 'File 2', value: 'file2' },
-  { name: 'File 3', value: 'file3' }
- ];
+	
 	// Vendor Resistration Ends //
 //1st Tab - Register A Vendor Ended //
 	
@@ -220,6 +216,10 @@ angular.module('newapp')
 		{ vendor: 'Machinery & Equipment', value: '5'},
 		{ vendor: 'All', value: 'ALL'}
 	];
+	$scope.searchBy = [
+		{type: 'Vendor Name', value: 'VENDOR_NAME'},
+		{type: 'Vendor Id', value: 'VENDOR_ID'}
+	];
 	// Default API Calling To Get Registered Vendors //	
 	
 	var request = {
@@ -243,116 +243,33 @@ angular.module('newapp')
 		});
 	}
 	
+	/* Vendor Search API Call */
+	$scope.getVendorByRegistration = function(searchType){
+		if(searchType.value == "VENDOR_NAME"){
+			var searchString = searchType.name
+		}
+		else {
+			var searchString = searchType.id
+		}
+		var searchRequest = {
+			searchFor : "REGISTERED_VENDOR",
+			searchString : searchString,
+			searchType : searchType.value
+		}
+		console.log(searchRequest);
+		$http.post("http://103.92.235.45/shop/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
+			console.log(resp);
+			$scope.vendorsCount = resp.data.paginationData.totalCount;
+			$scope.registerVendorsGrid.data = resp.data.responseData;
+		});
+	}
+	
 	/* Filter Based on Status Value */
 	$scope.getVendorByType = function(status, vendor){
 		console.log(status, vendor);
-		if(status == "0" && vendor == "1"){
-			var payload = {
-				status : "0",
-				customerType : "1"
-			};
-		}
-		else if(status == "0" && vendor == "2"){
-			var payload = {
-				status : "0",
-				customerType : "2"
-	 		};
-		}
-		else if(status == "0" && vendor == "3"){
-			var payload = {
-				status : "0",
-				customerType : "3"
-			};
-		}
-		else if(status == "0" && vendor == "4"){
-			var payload = {
-				status : "0",
-				customerType : "4"
-			};
-		}
-		else if(status == "0" && vendor == "5"){
-			var payload = {
-				status : "0",
-				customerType : "5"
-			};
-		}
-		else if(status == "0" && vendor == "ALL"){
-			var payload = {
-				status : "0",
-				customerType : "ALL"
-			};
-		}
-		else if(status == "1" && vendor == "1"){
-			var payload = {
-				status : "1",
-				customerType : "1"
-			};
-		}
-		else if(status == "1" && vendor == "2"){
-			var payload = {
-				status : "1",
-				customerType : "2"
-			};
-		}
-		else if(status == "1" && vendor == "3"){
-			var payload = {
-				status : "1",
-				customerType : "3"
-			};
-		}
-		else if(status == "1" && vendor == "4"){
-			var payload = {
-				status : "1",
-				customerType : "4"
-			};
-		}
-		else if(status == "1" && vendor == "5"){
-			var payload = {
-				status : "1",
-				customerType : "5"
-			};
-		}
-		else if(status == "1" && vendor == "ALL"){
-			var payload = {
-				status : "1",
-				customerType : "ALL"
-			};
-		}
-		else if(status == "ALL" && vendor == "1"){
-			var payload = {
-				status : "ALL",
-				customerType : "1"
-			};
-		}
-		else if(status == "ALL" && vendor == "2"){
-			var payload = {
-				status : "ALL",
-				customerType : "2"
-			};
-		}
-		else if(status == "ALL" && vendor == "3"){
-			var payload = {
-				status : "ALL",
-				customerType : "3"
-			};
-		}
-		else if(status == "ALL" && vendor == "4"){
-			var payload = {
-				status : "ALL",
-				customerType : "4"
-			};
-		}
-		else if(status == "ALL" && vendor == "5"){
-			var payload = {
-				status : "ALL",
-				customerType : "5"
-			};
-		}
-		else {
-			var payload = {
-				status : "ALL",
-				customerType : "ALL"
-			};
+		var payload = {
+			status : status,
+			customerType : vendor
 		}
 		if(status == "0"){
 			$scope.pending = true;
@@ -865,11 +782,11 @@ angular.module('newapp')
 
 // 3rd Tab - Approve Vendor Products Started //
 	// Approve Vendor Products Starts //
-	$http.get(resturl+"/getRequestedVendorForAdmin?pageNumber=1&pageSize=10").then(function(resp){
-		console.log(resp);
-		$scope.vendorProductsGrid.data = resp.data.responseData;
-		$scope.vendorProductsCount = resp.data.paginationData.totalCount;
-	});
+		$http.get(resturl+"/getRequestedVendorForAdmin?pageNumber=1&pageSize=10").then(function(resp){
+			console.log(resp);
+			$scope.vendorProductsGrid.data = resp.data.responseData;
+			$scope.vendorProductsCount = resp.data.paginationData.totalCount;
+		});
 	
 	$scope.vendorProductsPaging = function(page, pageSize ,total){
 		$http.get(resturl+"/getRequestedVendorForAdmin?pageNumber="+page+"&pageSize=10").then(function(resp){
@@ -887,6 +804,26 @@ angular.module('newapp')
 			cellTemplate: '<div class="text-center ui-grid-cell-contents"><button class="btn btn-primary" ng-click="grid.appScope.getVendorProducts(row)">Details</button></div>'
 		}
 	];
+	
+	$scope.getProdVendorBySearch = function(prodVendorType){
+		if(prodVendorType.value == "VENDOR_NAME"){
+			var searchString = prodVendorType.name
+		}
+		else {
+			var searchString = prodVendorType.id
+		}
+		var searchRequest = {
+			searchFor : "VENDOR_PRODUCTS",
+			searchString : searchString,
+			searchType : prodVendorType.value
+		}
+		console.log(searchRequest);
+		$http.post("http://103.92.235.45/shop/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
+			console.log(resp);
+			$scope.vendorProductsGrid.data = resp.data.responseData;
+			$scope.vendorProductsCount = resp.data.paginationData.totalCount;
+		});
+	}
 	
 	$scope.getVendorProducts = function(row){
 		$http.get(resturl+"/admin/vendor/products/"+row.entity.vendorId+"?pageNumber=1&pageSize=4").then(function(resp){
@@ -997,6 +934,25 @@ angular.module('newapp')
 		{ count: '100', value: '100'}
 	];
 	
+	$scope.getPaymentVendorBySearch = function(paymentVendorType){
+		if(paymentVendorType.value == "VENDOR_NAME"){
+			var searchString = paymentVendorType.name
+		}
+		else {
+			var searchString = paymentVendorType.id
+		}
+		var searchRequest = {
+			searchFor : "PAYMENT_VENDOR",
+			searchString : searchString,
+			searchType : paymentVendorType.value
+		}
+		console.log(searchRequest);
+		$http.post("http://103.92.235.45/shop/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
+			console.log(resp);
+			$scope.paidVendorsGrid.data = resp.data.responseData;
+			$scope.paidVendorsCount = resp.data.paginationData.totalCount;
+		});
+	}
 	
 	$scope.due = true;
 	// Default Vendors Loading Based On Payment Status //
