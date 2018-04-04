@@ -257,7 +257,7 @@ angular.module('newapp')
 			searchType : searchType.value
 		}
 		console.log(searchRequest);
-		$http.post("http://103.92.235.45/shop/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
+		$http.post(resturl+"/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
 			console.log(resp);
 			$scope.vendorsCount = resp.data.paginationData.totalCount;
 			$scope.registerVendorsGrid.data = resp.data.responseData;
@@ -818,7 +818,7 @@ angular.module('newapp')
 			searchType : prodVendorType.value
 		}
 		console.log(searchRequest);
-		$http.post("http://103.92.235.45/shop/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
+		$http.post(resturl+"/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
 			console.log(resp);
 			$scope.vendorProductsGrid.data = resp.data.responseData;
 			$scope.vendorProductsCount = resp.data.paginationData.totalCount;
@@ -947,7 +947,7 @@ angular.module('newapp')
 			searchType : paymentVendorType.value
 		}
 		console.log(searchRequest);
-		$http.post("http://103.92.235.45/shop/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
+		$http.post(resturl+"/vendorSearchForAdmin?pageNumber=1&pageSize=10", searchRequest).then(function(resp){
 			console.log(resp);
 			$scope.paidVendorsGrid.data = resp.data.responseData;
 			$scope.paidVendorsCount = resp.data.paginationData.totalCount;
