@@ -1985,7 +1985,7 @@
                <div class="tab-pane mech-portfolio">
                   <div class="breadcrumbs"><a href="#/">Home</a>    &gt; &nbsp;  My Account &nbsp; &gt; &nbsp; My Portfolio </div>
                   <section class="login mid Portfolio-section">
-                     <form name="portfolioForm" novalidate>
+                     <form name="mechineryForm" novalidate>
                         <section class="login mid registration">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 left">
 						   <div class="form-group" ng-class="{ 'has-error' : mechineryForm.Equipment.$invalid && !mechineryForm.MachineryName.$pristine }">
@@ -2004,11 +2004,12 @@
                            </div>
 						    <div class="form-group" ng-class="">
 								<div class="sec-block">
-								   <select id="area" ng-model="mechineryFormportfolioImages.hiringType" required>
+								   <select  ng-model="mechineryFormportfolioImages.hiringType" name="hiringType" required>
 									  <option value="">Unit</option>
 									  <option value="Per Day">Per Day</option>
 									  <option value="Per Hour">Per Hour</option>
 								   </select>
+								   <p class="help-block" ng-show="mechineryForm.hiringType.$touched && mechineryForm.hiringType.$error.required">Select Unit</p>
 								</div>
 								<i class="fa fa-star" aria-hidden="true"></i>
 								<p id="id4" class="help-block"></p>
@@ -2022,7 +2023,7 @@
                            </div>
                            </div>
                            <div class="form-group reg-btn">
-                              <button type="submit" class="btn btn-primary" ng-disabled="mechineryFormportfolioForm.$invalid" value="Update" title="Update" ng-click="mechineryFormImagesFun(mechineryFormportfolioImages)"><span>ADD</span> </button>
+                              <button type="submit" class="btn btn-primary" ng-disabled="mechineryForm.$invalid" value="Update" title="Update" ng-click="mechineryFormImagesFun(mechineryFormportfolioImages)"><span>ADD</span> </button>
                            </div>
                         </section>
 

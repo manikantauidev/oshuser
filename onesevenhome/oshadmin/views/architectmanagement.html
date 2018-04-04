@@ -66,21 +66,21 @@
 			    <div class="col-md-2 pad0">
                      <div class="form-group" ng-class="{ 'has-error' : historyForm.startDate.$invalid &amp;&amp; !historyForm.startDate.$pristine }">
                         
-						<input type="text" id="arcfromdate" name="startDate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="selectedStatus.startDate" placeholder="From Date" required="">
+						<input type="text" id="arcfromdate" name="startDate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="architectsdate.startDate" placeholder="From Date" required="">
                         <p ng-show="historyForm.startDate.$touched &amp;&amp; historyForm.startDate.$invalid" class="help-block ng-hide">From Date is required</p>
                      </div>
                   </div>
 			   <div class="col-md-2 pad0">
                      <div class="form-group" ng-class="{ 'has-error' : historyForm.todate.$invalid &amp;&amp; !historyForm.todate.$pristine }">
                        
-						<input type="text" id="arctodate" name="todate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="selectedStatus.endDate" placeholder="To Date" required="">
+						<input type="text" id="arctodate" name="todate" class="form-control ng-pristine ng-untouched ng-not-empty ng-valid ng-valid-required" ng-model="architectsdate.endDate" placeholder="To Date" required="">
                         <p ng-show="historyForm.todate.$touched &amp;&amp; historyForm.todate.$invalid" class="help-block ng-hide">To Date is required</p>
                      </div>
                   </div>
 				   <div class="col-md-2 pad0">
                      <div class="form-group">
                         <div class="button-login"></br>
-                           <button id="submit" type="submit" class="btn orderBtn" ng-disabled="historyForm.$invalid" ng-click="ArchitectByDate(selectedStatus)">Show</button>
+                           <button id="submit" type="submit" class="btn orderBtn" ng-disabled="historyForm.$invalid" ng-click="ArchitectByDate(selectedStatus.status,architectsdate)">Show</button>
                         </div>
                      </div>
                   </div>

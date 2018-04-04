@@ -267,16 +267,23 @@ angular.module('newapp')
 		}
 	}
 	
-	$scope.ArchitectByDate = function(selectedStatus){
-		if(selectedStatus.status == "N"){
+	$scope.ArchitectByDate = function(status,architectsdate){
+		
+		if(architectsdate.startDate > architectsdate.endDate){
+			$scope.failure = "'From date' should be less than 'To date'";
+			$('.ErrdealModal').modal('show');
+		}else{
+		
+		
+		if(status == "N"){
 			$scope.pendResponse = true;
 			$scope.responded = false;
 			$scope.allbookings = false;
 			var request = {
 				vendorType : "3",
-				startDate : selectedStatus.startDate,
-				endDate : selectedStatus.endDate,
-				status : selectedStatus.status
+				startDate : architectsdate.startDate,
+				endDate : architectsdate.endDate,
+				status : status
 			}
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
 				console.log(resp);
@@ -291,15 +298,15 @@ angular.module('newapp')
 				});
 			}
 		}
-		else if(selectedStatus.status == "Y"){
+		else if(status == "Y"){
 			$scope.pendResponse = false;
 			$scope.responded = true;
 			$scope.allbookings = false;
 			var request = {
 				vendorType : "3",
-				startDate : selectedStatus.startDate,
-				endDate : selectedStatus.endDate,
-				status : selectedStatus.status
+				startDate : architectsdate.startDate,
+				endDate : architectsdate.endDate,
+				status : status
 			}
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
 				console.log(resp);
@@ -320,9 +327,9 @@ angular.module('newapp')
 			$scope.allbookings = true;
 			var request = {
 				vendorType : "3",
-				startDate : selectedStatus.startDate,
-				endDate : selectedStatus.endDate,
-				status : selectedStatus.status
+				startDate : architectsdate.startDate,
+				endDate : architectsdate.endDate,
+				status : status
 			}
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
 				console.log(resp);
@@ -337,6 +344,7 @@ angular.module('newapp')
 				});
 			}
 		}
+		};
 	}
 	
 	// Close Booking Service //

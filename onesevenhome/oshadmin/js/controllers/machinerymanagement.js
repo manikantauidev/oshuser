@@ -330,13 +330,18 @@ angular.module('newapp')
 	}
 	
 	// Function retrieve the booking's list based on status //
-	$scope.machinaryByDate = function(selectedStatus) {
-		if(selectedStatus.status == "N"){
+	$scope.machinaryByDate = function(status,mechenarybydate) {
+			$window.scrollTo(0, 0);
+		if(mechenarybydate.startDate > mechenarybydate.endDate){
+			$scope.failure = "'From date' should be less than 'To date'";
+			$('.ErrdealModal').modal('show');
+		}else{
+		if(status == "N"){
 			var payload = {
 				vendorType : "5",
-				startDate : selectedStatus.startDate,
-				endDate : selectedStatus.endDate,
-				status : selectedStatus.status
+				startDate : mechenarybydate.startDate,
+				endDate : mechenarybydate.endDate,
+				status : status
 			
 			};
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", payload).then(function(resp){
@@ -348,12 +353,12 @@ angular.module('newapp')
 			$scope.responded = false;
 			$scope.allbookings = false;
 		}
-		else if(selectedStatus.status == "Y"){
+		else if(status == "Y"){
 			var payload = {
 				vendorType : "5",
-				startDate : selectedStatus.startDate,
-				endDate : selectedStatus.endDate,
-				status : selectedStatus.status
+				startDate : mechenarybydate.startDate,
+				endDate : mechenarybydate.endDate,
+				status : status
 			};
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", payload).then(function(resp){
 				console.log(resp);
@@ -367,9 +372,9 @@ angular.module('newapp')
 		else {
 			var payload = {
 				vendorType : "5",
-				startDate : selectedStatus.startDate,
-				endDate : selectedStatus.endDate,
-				status : selectedStatus.status
+				startDate : mechenarybydate.startDate,
+				endDate : mechenarybydate.endDate,
+				status : status
 			};
 			$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", payload).then(function(resp){
 				console.log(resp);
@@ -380,6 +385,7 @@ angular.module('newapp')
 			$scope.responded = false;
 			$scope.allbookings = true;
 		}
+		};
 	}
 	// Delete Confirmation Popup //
 	$scope.deleteBooking = function(){
