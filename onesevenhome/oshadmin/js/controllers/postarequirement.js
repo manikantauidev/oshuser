@@ -24,7 +24,7 @@ angular.module('newapp')
 				status : status
 			};
 			console.log(request);
-			$http.post("http://103.92.235.45/shop/getPostRequirementsByDate", request).then(function(resp){
+			$http.post(resturl+"/getPostRequirementsByDate", request).then(function(resp){
 				console.log(resp);
 				$scope.postRequirementGrid.data = resp.data.responseData;
 				$scope.postRequireCount = resp.data.paginationData.totalCount;
@@ -39,7 +39,7 @@ angular.module('newapp')
 			endDate : requirementDates.endDate,
 			status : status
 		}
-		$http.post("http://103.92.235.45/shop/getPostRequirementsByDate/?pageNumber="+page+"&pageSize=10", request).then(function(resp){
+		$http.post(resturl+"/getPostRequirementsByDate/?pageNumber="+page+"&pageSize=10", request).then(function(resp){
 			console.log(resp);
 			$scope.postRequirementGrid.data = resp.data.responseData;
 			$scope.postRequireCount = resp.data.paginationData.totalCount;
@@ -92,7 +92,7 @@ angular.module('newapp')
 			status : status
 		};
 		
-		$http.post("http://103.92.235.45/shop/getPostRequirementsByDate/?pageNumber=1&pageSize=10", request).then(function(resp){
+		$http.post(resturl+"/getPostRequirementsByDate/?pageNumber=1&pageSize=10", request).then(function(resp){
 			console.log(resp);
 			$scope.postRequirementGrid.data = resp.data.responseData;
 			$scope.postRequireCount = resp.data.paginationData.totalCount;
