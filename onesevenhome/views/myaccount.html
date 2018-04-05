@@ -1833,7 +1833,7 @@
                <div class="tab-pane wal-Portfolio">
                   <div class="breadcrumbs"><a href="#/">Home</a>    &gt; &nbsp;  My Account &nbsp; &gt; &nbsp; My Portfolio </div>
                   <section class="login mid Portfolio-section">
-                     <form name="portfolioForm" novalidate>
+                     <form name="serviceForm" novalidate>
                         <section class="login mid registration">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 left">
 						   <!-- Description -->
@@ -1859,26 +1859,29 @@
                               <i class="fa fa-star" aria-hidden="true"></i>
                            </div>
                            <!-- Price -->
-                           <div class="form-group" ng-class="{ 'has-error' : serviceForm.Price.$invalid && !serviceForm.vendorName.$pristine }">
-                              <input type="number" name="Price" class="form-control" ng-model="portfolioImages.price"placeholder="Price/sq ft" required/>
-                              <i class="fa fa-star" aria-hidden="true"></i>
-                           </div>
-						   
+                           <div class="form-group"> 
+						   <input type="text" name="Price" class="form-control" value="0" ng-model="portfolioImages.Price"  placeholder="Price/sq ft " required >
+                              <!-- <input type="number" name="Price" class="form-control" ng-model="portfolioImages.price"placeholder="Price/sq ft" required/> -->
+                             <i class="fa fa-star" aria-hidden="true"></i> 
+                           </div> 
+						   <!-- <div> -->
+						   <!-- <input type="text" name="Price" class="form-control" value="0" placeholder="Price/sq ft " required > -->
+						   <!-- </div> -->
 						    <div class="form-group" ng-class="{ 'has-error' : serviceForm.amount.$invalid && !serviceForm.amount.$pristine }">
                                  <input type="number" name="amount" class="form-control" ng-model="portfolioImages.amount"placeholder="Service Charge/sq ft" required/>
                                  <i class="fa fa-star" aria-hidden="true"></i>
                               </div>
 							  
                            <div class="form-group">
-                              <input name="portfolio" id="portfolio" class="inputfile inputfile-2" upload-files type="file">
-                              <label for="portfolio"><span>Select Image</span></label>
+                              <input name="walportfolio" id="walportfolio" class="inputfile inputfile-2 walpic" upload-files type="file">
+                              <label for="walportfolio"><span>Select Image</span></label>
                               <ul>
-                                 <li ng-repeat="file in files">{{file.name}}</li>
+                                 <li id="wallselect_file">{{wallselect_filepics}}</li>
                               </ul>
                            </div>
 						</div>
                            <div class="form-group reg-btn">
-                              <button type="submit" class="btn btn-primary"  value="Update" title="Update" ng-click="walportfolioImagesFun(portfolioImages)"><span>ADD</span> </button>
+                              <button type="submit" class="btn btn-primary"  value="Update" title="Update" ng-disabled="serviceForm.$invalid" ng-click="walportfolioImagesFun(portfolioImages)"><span>ADD</span> </button>
                            </div>
 					   
                         </section>
@@ -1927,21 +1930,21 @@
                <div class="tab-pane ArchPortfolio Portfolio">
                   <div class="breadcrumbs"><a href="#/">Home</a>    &gt; &nbsp;  My Account &nbsp; &gt; &nbsp; My Portfolio </div>
                   <section class="login mid Portfolio-section">
-                     <form name="portfolioForm" novalidate>
+                     <form name="serviceForm" novalidate>
                         <section class="login mid registration">
                            <div class="form-group" ng-class="{ 'has-error' : serviceForm.vendorName.$invalid && !serviceForm.vendorName.$pristine }">
                               <input type="text" name="vendorName" class="form-control" ng-model="portfolioImages.portfolioName" placeholder="portfolio Name" required/>
                               <i class="fa fa-star" aria-hidden="true"></i>
                            </div>
                            <div class="form-group">
-                           <input name="file" id="file-1" upload-files class="inputfile inputfile-2" type="file" ng-model="vendor.vendorAuthCert">
+                           <input name="file" id="file-1" upload-files class="inputfile inputfile-2 arcimagesa" type="file" >
                            <label for="file-1"><span><abbr title="pdf/doc/jpeg/png files"> Select File/Image</abbr></span></label>
 						    <ul class="file-upload">
-								<li ng-repeat="file in files">{{file.name}}</li>
+								<li id="arcpicimage">{{ARCIMG}}</li>
 							</ul>
                         </div>
                            <div class="form-group reg-btn">
-                              <button type="submit" class="btn btn-primary" title="Add" ng-click="portfolioImagesFun(portfolioImages)"><span>Add</span> </button>
+                              <button type="submit" class="btn btn-primary" ng-disabled="serviceForm.$invalid" title="Add" ng-click="portfolioImagesFun(portfolioImages)"><span>Add</span> </button>
                            </div>
                         </section>
                      </form>
@@ -1976,8 +1979,8 @@
                     <div paging
 			page="1" 
 			page-size="5" 
-			total=totalCount
-			paging-action="PagingAct(page, pageSize, total)">
+			total=arctotalCount
+			paging-action="arcPagingAct(page, pageSize, total)">
 		</div>
                   </div>
                </div>
@@ -1989,22 +1992,22 @@
                         <section class="login mid registration">
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 left">
 						   <div class="form-group" ng-class="{ 'has-error' : mechineryForm.Equipment.$invalid && !mechineryForm.MachineryName.$pristine }">
-                              <input type="text" name="EquipmentName" class="form-control" ng-model="mechineryFormportfolioImages.equipmentName" placeholder="Equipment Name" required/>
+                              <input type="text" name="EquipmentName" class="form-control" ng-model="mechineryFormportfolioImages.equipmentName" placeholder="Equipment Name" required>
                               <i class="fa fa-star" aria-hidden="true"></i>
                            </div>
                            <div class="form-group" ng-class="{ 'has-error' : mechineryForm.Description.$invalid && !mechineryForm.Description.$pristine }">
-                              <input type="text" name="vendorName" class="form-control" ng-model="mechineryFormportfolioImages.portfolioName" placeholder="Description" required/>
+                              <input type="text" name="vendorName" class="form-control" ng-model="mechineryFormportfolioImages.portfolioName" placeholder="Description" required>
                               <i class="fa fa-star" aria-hidden="true"></i>
                            </div>
                           </div>
 						  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 right">
 							<div class="form-group" ng-class="{ 'has-error' : mechineryForm.Price.$invalid && !mechineryForm.Description.$pristine }">
-                              <input type="text" name="Price" class="form-control" ng-model="mechineryFormportfolioImages.equipmentPrice" placeholder="Price" required/>
+                              <input type="text" name="Price" class="form-control" ng-model="mechineryFormportfolioImages.equipmentPrice" placeholder="Price" required>
                               <i class="fa fa-star" aria-hidden="true"></i>
                            </div>
 						    <div class="form-group" ng-class="">
 								<div class="sec-block">
-								   <select  ng-model="mechineryFormportfolioImages.hiringType" name="hiringType" required>
+								   <select id="area" ng-model="mechineryFormportfolioImages.hiringType"  name="hiringType" required>
 									  <option value="">Unit</option>
 									  <option value="Per Day">Per Day</option>
 									  <option value="Per Hour">Per Hour</option>
@@ -2014,11 +2017,21 @@
 								<i class="fa fa-star" aria-hidden="true"></i>
 								<p id="id4" class="help-block"></p>
 						   </div>
-                           <div class="form-group">
-                              <input name="portfolio" id="portfolio" class="inputfile inputfile-2" upload-files type="file">
-                              <label for="portfolio"><span><abbr title="pdf/doc/jpeg/png files"> Select File/Image</abbr></span></label>
-                              <ul class="file-links">
-                                 <li ng-repeat="file in files">{{file.name}}</li>
+                           <!-- <div class="form-group"> -->
+                              <!-- <input name="portfolio" id="portfolio" class="inputfile inputfile-2 mechnarypicss" upload-files type="file"> -->
+                              <!-- <label for="portfolio"><span><abbr title="pdf/doc/jpeg/png files"> Select File/Image</abbr></span></label> -->
+                              <!-- <ul class="file-links"> -->
+                                 <!-- <li id="mechpicselect_file">{{mechpics}}</li> -->
+                              <!-- </ul> -->
+                           <!-- </div> -->
+						   
+						   
+						   
+						   <div class="form-group" >
+                              <input name="portfolio" id="portfolio"  class="inputfile inputfile-2 mechnarypicss" upload-files type="file">
+                              <label for="portfolio"><span>Select Image</span></label>
+                              <ul>
+                                 <li id="mechpicselect_file">{{meshaneryportpics}}</li>
                               </ul>
                            </div>
                            </div>
@@ -2201,32 +2214,32 @@
                </div>
                <!-- Machinery Update-->
                <!-- Update mechinary Portfolio Images Starts -->
-               <div class="tab-pane mech-update">
-                  <div class="breadcrumbs"><a href="#/">Home</a>    &gt; &nbsp;   My Account &nbsp; &gt; &nbsp;Update </div>
-                  <div class="my-acc-wishlist">
-                     <div class="wish-block">
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 block" ng-repeat="macch in mechinaryuprecently">
-                           <figure>
-                              <a><img ng-src="{{macch.imageURL}}" ></a>
-                           </figure>
-                           <input type="text" ng-model="macch.portfolioName">
-                           <div class="input-group">
-                              <input type="file" id="brandImage" name="brandImage" upload-files class="inputfile inputfile-2"/>
-                              <label for="brandImage"><span>Select Image</span></label>
-                              <ul>
-                                 <li ng-repeat="brandImage in files">{{brandImage.name}}</li>
-                              </ul>
-                           </div>
-                           <a class="w-edit" href="" ng-click="updatemechPortImg(macch)" class="va">Update</a>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="alert alert-warning " ng-if="errmsg"> 
-                           <span class="close" data-dismiss="alert" aria-label="close" ng-click="alerthide()">&times;</span>
-                           <strong> </strong>{{errmessage}}
-                        </div>
-                     </div>
-                  </div>
-               </div>
+               <!-- <div class="tab-pane mech-update"> -->
+                  <!-- <div class="breadcrumbs"><a href="#/">Home</a>    &gt; &nbsp;   My Account &nbsp; &gt; &nbsp;Update </div> -->
+                  <!-- <div class="my-acc-wishlist"> -->
+                     <!-- <div class="wish-block"> -->
+                        <!-- <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 block" ng-repeat="macch in mechinaryuprecently"> -->
+                           <!-- <figure> -->
+                              <!-- <a><img ng-src="{{macch.imageURL}}" ></a> -->
+                           <!-- </figure> -->
+                           <!-- <input type="text" ng-model="macch.portfolioName"> -->
+                           <!-- <div class="input-group"> -->
+                              <!-- <input type="file" id="portfolio" name="portfolio" upload-files class="inputfile inputfile-2 mecportfolio"/> -->
+                              <!-- <label for="mecportfolio"><span>Select Image</span></label> -->
+                              <!-- <ul> -->
+                                 <!-- <li id="mechpicselectupdate_file">{{brandImage}}</li> -->
+                              <!-- </ul> -->
+                           <!-- </div> -->
+                           <!-- <a class="w-edit" href="" ng-click="updatemechPortImg(macch)" class="va">Update</a> -->
+                        <!-- </div> -->
+                        <!-- <div class="clearfix"></div> -->
+                        <!-- <div class="alert alert-warning " ng-if="errmsg">  -->
+                           <!-- <span class="close" data-dismiss="alert" aria-label="close" ng-click="alerthide()">&times;</span> -->
+                           <!-- <strong> </strong>{{errmessage}} -->
+                        <!-- </div> -->
+                     <!-- </div> -->
+                  <!-- </div> -->
+               <!-- </div> -->
                <!-- Update  mechinary Portfolio Images Ends -->
                <!-- Architects Update-->
                <!-- Update Portfolio Images Starts -->
@@ -3080,10 +3093,10 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                       </div>
 					  <div class="form-group">
-                           <input name="file" id="file-1" upload-files class="inputfile inputfile-2" type="file" ng-model="vendor.vendorAuthCert">
-                           <label for="file-1"> <span>Select Image</span></label>
+                           <input name="arcportfolio" id="arcportfolio" upload-files class="inputfile inputfile-2 arcpicimages" type="file" ng-model="vendor.vendorAuthCert">
+                           <label for="arcportfolio"> <span>Select Image</span></label>
 						    <ul class="file-upload">
-								<li ng-repeat="file in files">{{file.name}}</li>
+								<li id="arcpicselect_file">{{picselect_file}}</li>
 							</ul>
                         </div>
                   </div>
@@ -3133,10 +3146,10 @@
                       </div>
 					  	  
 					  <div class="form-group">
-                           <input name="file" id="waipaperpic"  class="inputfile inputfile-2 walpic" type="file" accept=".jpg, .jpeg, .png">
-                           <label for="waipaperpic"> <span>Select Image</span></label>
+                           <input name="file" id="waipaperupdatepic"  class="inputfile inputfile-2 walupdatepic" type="file" accept=".jpg, .jpeg, .png">
+                           <label for="waipaperupdatepic"> <span>Select Image</span></label>
 						    <ul class="file-links">
-								<li id="wallpicselect_file">{{file}}</li>
+								<li id="wallpicselect_file">{{waipaperupdate}}</li>
 							</ul>
                         </div>
                   </div>
@@ -3202,7 +3215,7 @@
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                     <button type="button" class="btn btn-danger" ng-click="confirmDelete(viewPortfolio)">Yes</button>
+                     <button type="button" class="btn btn-danger" ng-click="confirmDelete()">Yes</button>
                   </div>
                </div>
             </div>
@@ -3238,13 +3251,16 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                       </div>
 					  <div class="form-group">
-                           <input name="file" id="file-1" upload-files class="inputfile inputfile-2" type="file" ng-model="viewmechPortfolio.imageURL">
-                           <label for="file-1"> <span>Select Image</span></label>
+                           <input name="portfolio" id="mechupdateportfolio"  class="inputfile inputfile-2 mechupportpic" upload-files type="file">
+                           <label for="mechupdateportfolio"> <span>Select Image</span></label>
 						    <ul class="file-upload">
-								<li ng-repeat="file in files">{{file.name}}</li>
+								<li id="mechpicselectupdate_file">{{updateportpics}}</li>
 							</ul>
                         </div>
-                  </div>
+						
+						
+						
+						</div>
                   <div class="clearfix"></div>
                </form>
             </div>

@@ -1266,11 +1266,11 @@ $('.vendorpic').change(function() {
 		$http.post(resturl + "/getUserArchitectsPortfolio?"+ "pageNumber=1&pageSize=5", reqObj).then(function (resp) {
 			console.log(resp);
 			$scope.arcrecently = resp.data.responseData;
-			$scope.totalCount=resp.data.paginationData.totalCount;
+			$scope.arctotalCount=resp.data.paginationData.totalCount;
 			$scope.descript = resp.data;
 		});
 		$scope.page = 1;
-					$scope.PagingAct = function(page, pageSize, total) {
+					$scope.arcPagingAct = function(page, pageSize, total) {
 							var reqObj = {
 		"vendorId": $scope.loggedInuserId,
 		"status" :"ALL"
@@ -1282,6 +1282,13 @@ $('.vendorpic').change(function() {
 					});
 					}
 		// Retrieval Ends //
+		
+		$('.arcimagesa').change(function() {
+        var filename = $('.arcimagesa')[0].files[0].name;
+        $('#arcpicimage').html(filename);		
+    });
+		
+		
 		
 		$scope.portfolioImagesFun = function (portfolioImages) {
 			var request = {
@@ -1359,7 +1366,14 @@ $('.vendorpic').change(function() {
 			});
 		});
 
+		
+		$('.arcpicimages').change(function() {
+        var filename = $('.arcpicimages')[0].files[0].name;
+        $('#arcpicselect_file').html(filename);		
+    });
+		
 		$scope.updatePortImg = function (viewPortfolio) {
+			$('.architectPopup').modal('hide');
 			var request = {
 				portfolioId: viewPortfolio.portfolioId,
 				vendorId: $scope.loggedInuserId,
@@ -1457,13 +1471,6 @@ $('.vendorpic').change(function() {
 		
 		// Architecture Retrieval, Upload, Update & Deletion Ends//
 		
-			$('.mechpic').change(function() {
-        var filename = $('.mechpic')[0].files[0].name;
-        $('#mechpicselect_file').html(filename);		
-    });
-		
-		
-		
 		//mechinory retrival popup//
 		$scope.mechDetailsFun = function (mechImages) {
 			$scope.viewmechPortfolio = {
@@ -1474,10 +1481,15 @@ $('.vendorpic').change(function() {
 		}
 		
 		
-	
 		
-		
-		
+		$('#portfolio').change(function() {
+        var filename = $('#portfolio')[0].files[0].name;
+        $('#mechpicselect_file').html(filename);		
+    });
+			// $('.walpic').change(function() {
+        // var filename = $('.walpic')[0].files[0].name;
+        // $('#walpicselect_file').html(filename);		
+    // });
 		
 		/** mechinary portfolio **/
 var reqObj = {
@@ -1579,6 +1591,11 @@ var reqObj = {
 		};
 		// Portfolio mechinory Update Service Call Starts //
 		
+			$('.mechupportpic').change(function() {
+        var filename = $('.mechupportpic')[0].files[0].name;
+        $('#mechpicselectupdate_file').html(filename);		
+    });
+	
 	
 		$scope.files = [];
 		$scope.$on("seletedFile", function (event, args) {
@@ -1596,6 +1613,7 @@ $scope.mechDetailsFun = function (mechImages) {
 			};
 		}
 		$scope.updatemechPortImg = function (viewmechPortfolio) {
+			$('.mechPopup').modal('hide');
 			var request = {
 				portfolioId: viewmechPortfolio.portfolioId,
 				vendorId: $scope.loggedInuserId,
@@ -1669,11 +1687,11 @@ $scope.mechDetailsFun = function (mechImages) {
 			$http.post(resturl + "/deleteMachineryPortfolio", reqObj).then(function (resp) {
 				console.log(resp);
 				if(resp.data.status == true){
-					$scope.successmessage = resp.data.successMessage;
+					$scope.successmsg = resp.data.successMessage;
 					$('.successmechPopup').modal('show');
 				}
 				else{
-					$scope.errmessage = resp.data.errorMessage;
+					$scope.failuremsg = resp.data.errorMessage;
 					$('.errormechPopup').modal('hide');
 				}
 			});
@@ -1710,22 +1728,36 @@ var reqObj = {
 						$scope.waltotalCount=resp.data.paginationData.totalCount;
 					});
 					}
-		
-		
-		
+					$('.walpic').change(function() {
+        var filename = $('.walpic')[0].files[0].name;
+        $('#wallselect_file').html(filename);		
+    });		
+	
+	$scope.files = [];
+		$scope.$on("seletedFile", function (event, args) {
+			$scope.$apply(function () {
+				//add the file object to the scope's files collection
+				$scope.files.push(args.file);
+			});
+		});
 		
 		$scope.walportfolioImagesFun = function (portfolioImages) {
-			if(portfolioImages.price == undefined ){
-				portfolioImages.price = "0";
+			if(portfolioImages.Price  == undefined ){
+				portfolioImages.Price = "0";
 
 			}
-			console.log(portfolioImages.price);
+			if(portfolioImages.amount  == undefined ){
+				portfolioImages.amount = "0";
+
+			}
+			console.log(portfolioImages.Price);
 			var request = {
 				portfolioName: portfolioImages.portfolioName,
 				brand: portfolioImages.brand,
 				thickness: portfolioImages.thickness,
 				size: portfolioImages.size,
-				price: portfolioImages.price,
+				price: portfolioImages.Price,
+				serviceCharges  : portfolioImages.amount,
 				vendorId: $scope.loggedInuserId
 			};
 			console.log(request);
@@ -1786,20 +1818,14 @@ var reqObj = {
 		};
 
 		/**wallpaper Delete **/
-		var reqObj = {
-			"vendorId": $scope.loggedInuserId
-		};
-		$http.post(resturl + "/getUserWallPaperPortfolio", reqObj).then(function (resp) {
-			console.log(resp);
-			$scope.wallrecently = resp.data.responseData;
-		});
+	
 
 		$scope.waldeleteProd = function (wallpopPortfolio) {
-          //$('.wallpaperPopup').modal('hide');
-		//	$('.confirmDelmechPopup').modal('show');
+        $('.wallpaperPopup').modal('hide');
+			$('.confirmDelmechPopup').modal('show');
 		
-			//$scope.confirmDelete = function (wallpopPortfolio) {
-			//$('.confirmDelmechPopup').modal('hide');
+			$scope.confirmDelete = function () {
+			$('.confirmDelmechPopup').modal('hide');
 			
 			var reqObj = {
 				"portfolioId": wallpopPortfolio.portfolioId
@@ -1816,19 +1842,17 @@ var reqObj = {
 				}
 			});
 			var reqObj = {
-			"vendorId": $scope.loggedInuserId
+			"vendorId": $scope.loggedInuserId,
+			"status" :"ALL"
 		};
 		$http.post(resturl + "/getUserWallPaperPortfolio", reqObj).then(function (resp) {
 			console.log(resp);
 			$scope.wallrecently = resp.data.responseData;
 		});
 		};
+		};
 			// Wall paper update//
 			
-		$('.vendorpic').change(function() {
-        var filename = $('.vendorpic')[0].files[0].name;
-        $('#vendorpicselect_file').html(filename);		
-    });
 			
 
 		$http.post(resturl + "/getUserWallPaperPortfolio", reqObj).then(function (resp) {
@@ -1836,8 +1860,8 @@ var reqObj = {
 			$scope.wallrecently = resp.data.responseData;
 		});
 		
-		$('.walpic').change(function() {
-        var filename = $('.waipaperpic')[0].files[0].name;
+		$('#waipaperupdatepic').change(function() {
+        var filename = $('#waipaperupdatepic')[0].files[0].name;
         $('#wallpicselect_file').html(filename);		
     });
 		
@@ -1857,6 +1881,7 @@ $scope.portfolioDetailswalFun = function (wallImages) {
 			};
 		}
 		$scope.updatedwalpaperImg = function (wallpopPortfolio) {
+			$('.wallpaperPopup').modal('hide');
 			var request = {
 				portfolioId: wallpopPortfolio.portfolioId,
 				vendorId: $scope.loggedInuserId,
