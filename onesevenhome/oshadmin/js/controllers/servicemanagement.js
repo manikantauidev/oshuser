@@ -5,6 +5,11 @@ angular.module('newapp')
 		{ name: 'Opened Bookings', status: 'N' },
 		{ name: 'Closed Bookings', status: 'Y' },
 		{ name: 'All Bookings', status: 'ALL' }];
+	
+	$scope.searchTypes = [
+		{type:'User Name', value: 'USER_NAME'},
+		{type:'User Id', value: 'USER_ID'}
+	];
 	$("#startDate, #endDate").datepicker({
          autoclose: true,
          format: "yyyy-mm-dd",
@@ -43,9 +48,29 @@ angular.module('newapp')
 				$scope.serviceBookedData = resp.data.responseData;
 				$scope.bookingCount = resp.data.paginationData.totalCount;
 			});
-		 }
-	 }
-		
+		}
+	}
+	
+	$scope.getBookedUserBySearch = function(userType){
+		if(userType.value == "USER_NAME"){
+			var string = userType.name;
+		}
+		else {
+			var string = userType.id;
+		}
+		var request = {
+			searchFor : "SERVICES_BOOKING",
+			searchBy : userType.value,
+			searchString : string
+		}
+		console.log(request);
+		$http.post(resturl+"/searchServicesBooking?pageNumber=1&pageSize=10", request).then(function(resp){
+			console.log(resp);
+			$scope.serviceBookedData = resp.data.responseData;
+			$scope.bookingCount = resp.data.paginationData.totalCount;
+		});
+	}
+	
 	$scope.getBookedService = function(bookedService){
 		console.log(bookedService);
 		$scope.bookedDetails = {

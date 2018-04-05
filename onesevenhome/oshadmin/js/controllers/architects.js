@@ -11,6 +11,11 @@ angular.module('newapp')
 		endDate: "today"
 	});
 	
+	$scope.architectSearch = [
+		{type: 'Architect Name', value: 'USER_NAME'},
+		{type: 'Architect Id', value: 'USER_ID'},
+	];
+	
 	// Default API Response Calling Starts //
 	var payload = {
 		status : "N"
@@ -30,6 +35,28 @@ angular.module('newapp')
 		});
 	}
 	// Default API Response Calling Ends //
+	
+	// Search An Architect Method Starts //
+	$scope.getPortfolioBySearch = function(searchType){
+		if(searchType.type == 'Architect Name'){
+			var string = searchType.name;
+		}
+		else {
+			var string = searchType.id;
+		}
+		var request = {
+			searchFor : "ARCHITECT_PORTFOLIO",
+			searchBy : searchType.value,
+			searchString : string
+		};
+		console.log(request);
+		$http.post(resturl+"/getPortfoliosBySearch?pageNumber=1&pageSize=10", request).then(function(resp){
+			console.log(resp);
+			$scope.approvalsGrid.data = resp.data.responseData;
+			$scope.approvalsCount = resp.data.paginationData.totalCount;
+		});
+	}
+	// Search An Architect Method Ends //
 	
 	// Grid Data Retrieval Starts //
 	$scope.approvalsGrid = {};

@@ -25,6 +25,27 @@
                <p class="ar-para" ng-show="approved"> Showing all <b>Approved</b> Machinery Equipment Details</p>
                <p class="ar-para" ng-show="allPortfolio">Showing <b>All</b> Machinery Equipment Details</p>
                </div>
+			   <div class="clearfix"></div>
+			   <div class="vm-top col-xs-12">
+               <div class="selectDropdown col-sm-6">
+                  <div class="selectedValueClass">
+                     <select ng-init="searchType = machinerySearch[0]"
+                        ng-model="searchType"
+                        ng-options="option.type for option in machinerySearch">
+                     </select>
+                  </div>
+               </div>
+               <div class="form-group col-sm-3" ng-if="searchType.type == 'Machinery Name'">
+                  <input type="text" name="nameString" class="form-control" ng-model="searchType.name" ng-pattern-restrict="^[A-Za-z0-9 ]*$" placeholder="Enter Machinery Name" required>
+               </div>
+               <div class="form-group col-sm-3" ng-if="searchType.type == 'Machinery Id'">
+                  <input type="text" name="idString" class="form-control" ng-model="searchType.id" ng-pattern-restrict="^[0-9]*$" placeholder="Enter Machinery Id" required>
+               </div>
+               <div class="button-login col-sm-3">
+                  <button type="button" class="btn btn-primary" ng-click="getPortfolioBySearch(searchType)">Search Vendor(s)</button>
+               </div>
+            </div>
+            <div class="clearfix"></div>
 			   <div class="gridStyle"
                   ui-grid="machineryApprovalsGrid" ui-grid-cellnav  ui-grid-auto-resize>
                </div>

@@ -11,6 +11,11 @@ angular.module('newapp')
 		endDate: "today"
 	});
 	
+	$scope.machinerySearch = [
+		{type: 'Machinery Name', value: 'USER_NAME'},
+		{type: 'Machinery Id', value: 'USER_ID'},
+	];
+	
 	// Portfolio Approvals Starts //
 	// Default API Calling //
 	$scope.pending = true;
@@ -29,6 +34,29 @@ angular.module('newapp')
 			$scope.machineryApprovalsCount = resp.data.paginationData.totalCount;
 		});
 	};
+	
+	// Search A Machinery Method Starts //
+	$scope.getPortfolioBySearch = function(searchType){
+		console.log(searchType);
+		if(searchType.type == 'Machinery Name'){
+			var string = searchType.name;
+		}
+		else {
+			var string = searchType.id;
+		}
+		var request = {
+			searchFor : "MACHINERY_PORTFOLIO",
+			searchBy : searchType.value,
+			searchString : string
+		};
+		console.log(request);
+		$http.post(resturl+"/getPortfoliosBySearch?pageNumber=1&pageSize=10", request).then(function(resp){
+			console.log(resp);
+			$scope.machineryApprovalsCount = resp.data.paginationData.totalCount;
+			$scope.machineryApprovalsGrid.data = resp.data.responseData;
+		});
+	};
+	//
 	
 	// Machinery & Equipments Grid Data Retrieval //
 	$scope.machineryApprovalsGrid = {};

@@ -93,6 +93,7 @@ angular.module('newapp')
 	});
 	$scope.page = 1;
 	$scope.detailsPagingAct = function(page, pageSize, total) {
+		$window.scrollTo(0,0);
 		$http.get(resturl+"/services/"+$routeParams.sid+"/workers?pageNumber="+page+"&pageSize=5").then(function(resp) {
             console.log(resp);
             $scope.servicedetails = resp.data.responseData;
