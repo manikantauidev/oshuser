@@ -206,13 +206,13 @@ angular.module('newapp')
 				$scope.uncheck = false;
 				
 			}
-			$scope.hide=true;
+
 	$scope.vendorselect = function(maccw){
-		$scope.hide=false;
+		
 		if(maccw.checked){
 			$scope.hide=false;
 		}else{
-		$scope.hide=true;	
+		$scope.hide=false;	
 		}
 	}
 			
@@ -230,10 +230,18 @@ angular.module('newapp')
 			});
 			};
 					//delete wishlist
+					
+				
+					
+					
 			$scope.wishlistDel=function(){		
+
 		var productId = $(".vendor-chk-select input:checkbox:checked").map(function(){
       return $(this).val();
-    }).get();		
+    }).get();
+	            if(productId.length=="0"){
+					alert("Please select any one of the Product");
+				}else{
 		var delWishList={"vendorId":$scope.loggedInuserId,"productId":productId}
 	$http.post(resturl+"/deleteWishListProducts", delWishList).then(function(resp) {
 	console.log(resp)
@@ -253,6 +261,8 @@ angular.module('newapp')
 			});
 	
 	});
+				};
+			
 		
 	}
 	
@@ -518,7 +528,7 @@ console.log($scope.Architectdata);
 				$scope.cert = true;
 				$scope.files1 = true;
 				$scope.files2 = true;
-				$scope.file3 = true;
+				$scope.files3 = true;
 				if (certficateValue == null) {
 					$scope.cert = false;
 				}
@@ -549,7 +559,7 @@ console.log($scope.Architectdata);
 				$scope.cert = true;
 				$scope.files1 = true;
 				$scope.files2 = true;
-				$scope.file3 = true;
+				$scope.files3 = true;
 				if (certficateValue == null) {
 					$scope.cert = false;
 				}
@@ -579,7 +589,7 @@ console.log($scope.Architectdata);
 				$scope.cert = true;
 				$scope.files1 = true;
 				$scope.files2 = true;
-				$scope.file3 = true;
+				$scope.files3 = true;
 				if (certficateValue == null) {
 					$scope.cert = false;
 				}
@@ -609,7 +619,7 @@ console.log($scope.Architectdata);
 				$scope.cert = true;
 				$scope.files1 = true;
 				$scope.files2 = true;
-				$scope.file3 = true;
+				$scope.files3 = true;
 				if (certficateValue == null) {
 					$scope.cert = false;
 				}
@@ -639,7 +649,7 @@ console.log($scope.Architectdata);
 				$scope.cert = true;
 				$scope.files1 = true;
 				$scope.files2 = true;
-				$scope.file3 = true;
+				$scope.files3 = true;
 				if (certficateValue == null) {
 					$scope.cert = false;
 				}
@@ -669,7 +679,14 @@ $('.vendorpic').change(function() {
         $('#vendorcert_select').html(filename);		
     });
 		
-		
+$('#arcprofilePic').change(function() {
+        var filename = $('#arcprofilePic')[0].files[0].name;
+        $('#arcvendorpicselect_file').html(filename);		
+    });
+	$('.vendorcert').change(function() {
+        var filename = $('.vendorcert')[0].files[0].name;
+        $('#vendorcert_select').html(filename);		
+    });		
 		
 		
 		$scope.files = [];
@@ -927,7 +944,7 @@ $('.vendorpic').change(function() {
 		}
 		/**MACHINERY & EQUIPMENT update**/
 		else if ($scope.loggedInUserType == "MACHINERY & EQUIPMENT") {
-			$scope.ArcUpdate = function (vendorprofile) {
+			$scope.mechUpdate = function (vendorprofile) {
 				vendorprofile.userType = "MACHINERY & EQUIPMENT";
 				vendorprofile.companyName = vendorprofile.vendorName
 				vendorprofile.contactNumber = vendorprofile.vendorTelephone
@@ -1860,19 +1877,30 @@ var reqObj = {
 			$scope.wallrecently = resp.data.responseData;
 		});
 		
+		
+		
+			$scope.files = [];
+		//$scope.fileIDs = [];
+		//3. listen for the file selected event which is raised from directive
+		$("input[type='file']").on('change', function (e) {
+			var files = event.target.files;
+			//iterate files since 'multiple' may be specified on the element
+			for (var i = 0; i < files.length; i++) {
+				//emit event upward
+				//scope.$emit("seletedFile", { file: files[i], event: event });
+				$scope.files.push(files[i]);
+				//$scope.fileIDs.push(event.target.id);
+			}
+		});
+		
+		
+		
 		$('#waipaperupdatepic').change(function() {
         var filename = $('#waipaperupdatepic')[0].files[0].name;
         $('#wallpicselect_file').html(filename);		
     });
 		
 		
-		$scope.files = [];
-		$scope.$on("seletedFile", function (event, args) {
-			$scope.$apply(function () {
-				//add the file object to the scope's files collection
-				$scope.files.push(args.file);
-			});
-		});
 $scope.portfolioDetailswalFun = function (wallImages) {
 			$scope.wallpopPortfolio = {
 				imageURL: wallImages.imageURL,
@@ -1884,6 +1912,7 @@ $scope.portfolioDetailswalFun = function (wallImages) {
 			$('.wallpaperPopup').modal('hide');
 			var request = {
 				portfolioId: wallpopPortfolio.portfolioId,
+				
 				vendorId: $scope.loggedInuserId,
 				portfolioName:wallpopPortfolio .portfolioName
 			};
@@ -1964,3 +1993,4 @@ newapp.directive('uploadFiles', function () {
 		}
 	};
 });
+

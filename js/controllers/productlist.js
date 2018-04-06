@@ -1128,6 +1128,27 @@ console.log($scope.minRangeSlider.minPrice);
 					$scope.Count=resp.data.paginationData.totalCount;
 				});
 		}
+		$scope.page=1;
+		$scope.arcPagingAct = function(page, pageSize, total) {
+		 var payload = {
+					"code": $routeParams.sid
+				};
+				$http.post(resturl+"/getVendorsList"+"?"+"pageNumber="+page+"&pageSize=5",payload).then(function(resp) {
+					$scope.arc=true;
+					
+					console.log(resp);
+					$scope.arclist = resp.data.responseData;
+			if(resp.data.responseData.length == "0"){
+				$scope.arclistshow = true;
+				}else{
+			$scope.arclistshow = false;	
+			}
+					$scope.Count=resp.data.paginationData.totalCount;
+				});
+		};
+	
+		
+		
 							//rating filter
 	$scope.firstRate = 0;
     $scope.secondRate = 0;
@@ -1259,6 +1280,27 @@ console.log($scope.minRangeSlider.minPrice);
 					$scope.Count=resp.data.paginationData.totalCount;
 				});
 
+				$scope.page=1;
+		$scope.arcPagingAct = function(page, pageSize, total) {
+				
+					var payload = {
+					"code": "Civil"
+				};
+				$http.post(resturl+"/getVendorsList"+"?"+"pageNumber="+page+"&pageSize=5",payload).then(function(resp) {
+					$scope.arc=true;
+					
+					$scope.searchloc=true;
+					console.log(resp);
+					$scope.arclist = resp.data.responseData;
+					 if(resp.data.responseData.length == "0"){
+				$scope.arclistshow = true;
+				}else{
+			$scope.arclistshow = false;	
+			}
+					$scope.Count=resp.data.paginationData.totalCount;
+				});
+		};
+				
 				
 				//rating filter
 				

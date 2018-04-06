@@ -7200,3 +7200,10 @@ p#btn-del {
 }
 /* Popup Customized CSS Ends */
 
+textarea.form-control.text-area {
+    max-height: 100px;
+}
+button.w-edit.btn {
+    float: right;
+    padding: 2px 22px;
+}
