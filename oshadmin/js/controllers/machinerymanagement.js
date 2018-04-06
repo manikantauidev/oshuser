@@ -451,7 +451,7 @@ angular.module('newapp')
 			searchString : string
 		};
 		console.log(request);
-		$http.post("http://103.92.235.45/shop/getVendorBookingsBySearch?pageNumber=1&pageSize=10", request).then(function(resp){
+		$http.post(resturl+"/getVendorBookingsBySearch?pageNumber=1&pageSize=10", request).then(function(resp){
 			console.log(resp);
 			if(resp.data.responseData != null){
 				$scope.noResults = false;
