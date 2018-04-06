@@ -246,23 +246,29 @@ angular.module('newapp')
 		{ name: 'Approved', status: 'Y' },
 		{ name: 'All', status: 'ALL' }
 	];
+	
+	$scope.bookingSearch = [
+		{type: 'User Name', value: 'USER_NAME'},
+		{type: 'User Id', value: 'USER_ID'}
+	];
+	
 	$scope.pendResponse = true;
-	// var request = {
-		// vendorType : "3",
-		// status : "N"
-	// };
-	// $http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
-		// console.log(resp);
-		// $scope.bookingsGrid.data = resp.data.responseData;
-		// $scope.bookingCount = resp.data.paginationData.totalCount;
-	// });
-	// $scope.bookingsPagingAct = function(page, pageSize, total){
-		// $http.post(resturl+"/getVendorBookingsForAdmin?pageNumber="+page+"&pageSize=10", request).then(function(resp){
-			// console.log(resp);
-			// $scope.bookingsGrid.data = resp.data.responseData;
-			// $scope.bookingCount = resp.data.paginationData.totalCount;
-		// });
-	// }
+	/*var request = {
+		vendorType : "3",
+		status : "N"
+	};
+	$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber=1&pageSize=10", request).then(function(resp){
+		console.log(resp);
+		$scope.bookingsGrid.data = resp.data.responseData;
+		$scope.bookingCount = resp.data.paginationData.totalCount;
+	});
+	$scope.bookingsPagingAct = function(page, pageSize, total){
+		$http.post(resturl+"/getVendorBookingsForAdmin?pageNumber="+page+"&pageSize=10", request).then(function(resp){
+			console.log(resp);
+			$scope.bookingsGrid.data = resp.data.responseData;
+			$scope.bookingCount = resp.data.paginationData.totalCount;
+		});
+	}*/
 	$scope.bookingsGrid = {};
 	$scope.bookingsGrid.columnDefs = [
 		{name:'customerName', displayName: 'Customer'},
@@ -295,14 +301,12 @@ angular.module('newapp')
 	}
 	
 	$scope.ArchitectByDate = function(status,architectsdate){
-		
 		if(architectsdate.startDate > architectsdate.endDate){
 			$scope.failure = "'From date' should be less than 'To date'";
 			$('.ErrdealModal').modal('show');
-		}else{
-		
-		
-		if(status == "N"){
+		}
+		else{
+		  if(status == "N"){
 			$scope.pendResponse = true;
 			$scope.responded = false;
 			$scope.allbookings = false;
@@ -404,6 +408,38 @@ angular.module('newapp')
 			});
 		});
 	}
+	
+	// Search Customer Method Starts //
+	$scope.getBookingsBySearch = function(bookingType){
+		if(bookingType.type == 'User Name'){
+			var string = bookingType.name;
+		}
+		else{
+			var string = bookingType.id;
+		}
+		var request = {
+			vendorType : "3",
+			searchBy : bookingType.value,
+			searchString : string
+		};
+		console.log(request);
+		$http.post("http://103.92.235.45/shop/getVendorBookingsBySearch?pageNumber=1&pageSize=10", request).then(function(resp){
+			console.log(resp);
+			if(resp.data.responseData != null){
+				$scope.noResults = false;
+				$scope.bookingsGrid.data = resp.data.responseData;
+				$scope.bookingCount = resp.data.paginationData.totalCount;
+			}
+			else{
+				$scope.noResults = true;
+				$scope.message = resp.data.errorMsg;
+				$scope.bookingsGrid.data = [];
+				$scope.bookingCount = 0;
+			}
+		});
+	}
+	// Search Customer Method Ends //
+	
 	// Respond Service Ends //
 	// Bookings Functionality Ends //
 });

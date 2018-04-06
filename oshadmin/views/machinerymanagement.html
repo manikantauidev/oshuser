@@ -106,6 +106,28 @@
                <p class="ar-para" ng-show="responded"> Showing all <b>Responded</b> bookings</p>
                <p class="ar-para" ng-show="allbookings">Showing <b>All</b> bookings</p>
 			   </div>
+			   <div class="clearfix"></div>
+			   <div class="vm-top col-xs-12">
+               <div class="selectDropdown col-sm-6">
+                  <div class="selectedValueClass">
+                     <select ng-init="bookingType = bookingSearch[0]"
+                        ng-model="bookingType"
+                        ng-options="option.type for option in bookingSearch">
+                     </select>
+                  </div>
+               </div>
+               <div class="form-group col-sm-3" ng-if="bookingType.type == 'User Name'">
+                  <input type="text" name="nameString" class="form-control" ng-model="bookingType.name" ng-pattern-restrict="^[A-Za-z0-9 ]*$" placeholder="Enter User Name" required>
+               </div>
+               <div class="form-group col-sm-3" ng-if="bookingType.type == 'User Id'">
+                  <input type="text" name="idString" class="form-control" ng-model="bookingType.id" ng-pattern-restrict="^[0-9]*$" placeholder="Enter User Id" required>
+               </div>
+               <div class="button-login col-sm-3">
+                  <button type="button" class="btn btn-primary" ng-click="getBookingsBySearch(bookingType)">Search Vendor(s)</button>
+               </div>
+            </div>
+			<p style="text-align:center; color:#f00;" ng-show="noResults">{{message}}</p>
+			<div class="clearfix"></div>
 			   <div class="gridStyle"
                   ui-grid="machineryBookingsGrid" ui-grid-cellnav  ui-grid-auto-resize>
                </div>

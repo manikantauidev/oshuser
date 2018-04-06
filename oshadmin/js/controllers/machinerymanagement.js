@@ -269,6 +269,12 @@ angular.module('newapp')
 		{ name: 'Closed', status: 'Y' },
 		{ name: 'All', status: 'ALL' }
 	];
+	
+	$scope.bookingSearch = [
+		{type: 'User Name', value: 'USER_NAME'},
+		{type: 'User Id', value: 'USER_ID'}
+	];
+	
 	var request = {
 		status : "N",
 		vendorType : "5"
@@ -430,6 +436,38 @@ angular.module('newapp')
 			console.log(resp);
 		});
 	}*/
+	
+	// Search Customer Method Starts //
+	$scope.getBookingsBySearch = function(bookingType){
+		if(bookingType.type == 'User Name'){
+			var string = bookingType.name;
+		}
+		else{
+			var string = bookingType.id;
+		}
+		var request = {
+			vendorType : "5",
+			searchBy : bookingType.value,
+			searchString : string
+		};
+		console.log(request);
+		$http.post("http://103.92.235.45/shop/getVendorBookingsBySearch?pageNumber=1&pageSize=10", request).then(function(resp){
+			console.log(resp);
+			if(resp.data.responseData != null){
+				$scope.noResults = false;
+				
+				$scope.machineryBookingsGrid.data = resp.data.responseData;
+				$scope.machineryBookingsCount = resp.data.paginationData.totalCount;
+			}
+			else{
+				$scope.noResults = true;
+				$scope.message = resp.data.errorMsg;
+				$scope.machineryBookingsGrid.data = [];
+				$scope.machineryBookingsCount = 0;
+			}
+		});
+	}
+	// Search Customer Method Ends //
 	
 	// Machinery Bookings Ends //
 	
